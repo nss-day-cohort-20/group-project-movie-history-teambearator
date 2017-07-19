@@ -2,11 +2,58 @@
 <html>
 <head>
 	<title>Music History | Home</title>
-	<meta charset="utf-8">
+	<link rel="stylesheet" type="text/css" href="/lib/node_modules/bootstrap/dist/css/bootstrap-theme.min.css">
+	<link rel="stylesheet" type="text/css" href="/lib/node_modules/bootstrap/dist/css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="css/styles.css">
 </head>
 <body>
+	<nav class="navbar navbar-default navbar-fixed-top">
+		<div class="container-fluid navColor ">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="#">Bearator
+				</a>
+			</div>
+			<div class="navbar-form">
+				<div class="form-group" id="submitMessage">
+					<input type="text" id="userMessageInput" class="form-control" placeholder="Search For Movies!">
+				</div>
+				<div class="btn-group">
+					<button type="button" class="btn btn-default hidden"></button>
+					<button type="button" class="btn btn-default hidden"></button>
+					<button id="messageSubmitButton" type="button" class="btn submitSearch"> Search <span class="glyphicon glyphicon-search"></span></button>
+				</div>
+				<!-- <a class="navbar-brand navbar-right clearButton" id = "clearButton" href="#">Clear All</a> -->
+			</div>
+			<row>
+			<li class="col-md-4"></li>
+				<li class="radio col-md-9">
+					<label class="radio-inline">
+					<input id="newMovies" name="listFilter" type="radio">Find New Movies</label>
+						<label class="radio-inline">
+							<input id = "yourMovies" name="listFilter" type="radio">Search Your Movies</label>
+						</li>
+					</row>
+				</div>
+			</nav>
+			<div class="ghost">
+			</div>
+			<div class="container messageBox ">
+				<div class="messageHeader row">
 
-	<script type="text/javascript" src="dist/app.js"></script>
-</body>
-</html>
+					<button class="col-md-6" id="unwatched">Unwatched</button>
+					<button class="col-md-6" id="watched">Watched</button>
+
+				</div>
+				<div id="message-creator">
+				</div>
+			</div>
+
+			<script type="text/javascript" src="dist/app.js"></script>
+		</body>
+		</html>

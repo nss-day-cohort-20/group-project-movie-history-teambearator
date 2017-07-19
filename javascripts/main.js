@@ -29,7 +29,10 @@ $("#logout").click(function(){
 //whether the user hits enter or clicks "submit" they run the search function
 $('#userMessageInput').keyup( function (event) {
 	if (event.which == '13') {
-		movieController.runSearch();
+		movieController.runSearch()
+		.then ( (movieObjects) => {
+			console.log("movie objects", movieObjects);
+		});
 	}
 });
 

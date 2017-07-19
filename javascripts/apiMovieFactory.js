@@ -29,7 +29,7 @@ newSearch.getCastDetails = (url) => {
 		$.ajax({
 			url: url
 		}).done(function(castData) {
-		console.log("castData", castData);
+	// console.log("castData", castData);
 		resolve(castData);
 		});
 	});

@@ -1,4 +1,4 @@
 'use strict';
 
-//let apiGetter = require('./api-config.js');
+let movieFactoryAPI = require('./apiMovieFactory.js');
 

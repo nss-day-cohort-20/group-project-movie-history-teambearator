@@ -1,6 +1,6 @@
 'use strict';
 
-let firebase= require("./firebaseConfig");
+let firebase= require("./fb-config");
 let provider = new firebase.auth.GoogleAuthProvider();
 
 module.exports.logInGoogle = () =>{
@@ -13,10 +13,10 @@ module.exports.logOutGoogle = ()=>{
 	console.log ("logout");
 
 	firebase.auth().signOut().then(function() {
- 	alert("Thanks for visiting us!");
+ 		// alert("Thanks for visiting us!");
  	location.reload();
 }).catch(function(error) {
- 	alert("Something went wrong.");
+ 		// alert("Something went wrong.");
 });
 
 

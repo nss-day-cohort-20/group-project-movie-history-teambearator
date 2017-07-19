@@ -4,27 +4,12 @@
 
 console.log("It's connected");
 
-let moviedbData = require("./api-getter")();
 let $ = require('jquery');
+let moviedbData = require("./api-getter")();
 let api_key = require('./api-config.js');
 let apiUrl = "https://api.themoviedb.org/3/search/movie?api_key=";
 let newSearch = {};
 
-
-$('#userMessageInput').keyup( function () {
-
-});
-
-$('#messageSubmitButton').click ( function () {
-	console.log("button clicked");
-	let userInput = $("#userMessageInput").val();
-	newSearch.getMovies(userInput)
-	.then ( function (results) {
-		console.log("reslts", results);
-	});
-});
-
-//make a function that replaces ' ' with '+' in the user input 
 
 newSearch.getMovies = (searchString) => {
 	return new Promise ( (resolve, reject) => {
@@ -34,6 +19,9 @@ newSearch.getMovies = (searchString) => {
 			console.log("data", data);
 			resolve(data);
 		});
-		//use the apiUrl, the api_key, and the search string with + in between each space
+		//TODO make a reject statement
 	});
 };
+
+
+module.exports = newSearch;

@@ -8,7 +8,6 @@ require("firebase/auth");
 let config = {
 	apiKey: fbData.key,
 	authDomain: fbData.authDomain
-
 };
 
 firebase.initializeApp(config);

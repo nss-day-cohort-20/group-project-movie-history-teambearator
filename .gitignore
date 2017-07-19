@@ -4,3 +4,4 @@ dist/app.js
 lib/.sass-cache
 javascripts/fb-getter.js
 images/.DS_Store
+javascripts/api-getter.js

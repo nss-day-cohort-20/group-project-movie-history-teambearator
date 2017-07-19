@@ -30,6 +30,7 @@
     "hover.css": "^2.2.0",
     "jquery": "^3.2.1",
     "jquery-ui": "^1.12.1",
-    "matchdep": "^1.0.1"
+    "matchdep": "^1.0.1",
+    "rateyo": "^2.3.2"
   }
 }

@@ -1,5 +1,3 @@
-// search string first part:   https://api.themoviedb.org/3/search/movie?api_key={api_key}&query=?
-
 'use strict';
 
 console.log("It's connected");

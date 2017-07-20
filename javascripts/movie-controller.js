@@ -18,12 +18,12 @@ movieController.runSearch = () => {
 		return new Promise (function (resolve, reject) {
 			newSearch.getMovies(userInput)
 			.then ( function (data) {
-				console.log("reslts", data.results);
 				let tenNewMovies = data.results.slice(0, 10);//slice off first 10 results
 				console.log("ten movies", tenNewMovies);
 				let castPromisesArray = buildCastPromises(tenNewMovies);//go through movies,grab id, get actor info  
 				Promise.all(castPromisesArray) //array of promises --data below is castPromises resolved, which isthe actor list for each movie
 				.then(function(data) {
+					console.log("object of objects with arrays of cast members", data);
 					resolve(addActors(tenNewMovies, data));
 					//resolve(variable for the next function in the promise string) the result of addActors
 				});
@@ -59,7 +59,6 @@ function addActors (movies, actors) {
 		let shortCasts = tenMovieCasts.slice(0,3);
 		//sliceoff the first 3 cast members for each movie
 		castArrays.push(shortCasts); //add shortCasts to cast arrays
-		console.log("shortcasts", shortCasts);
 	});
 		console.log("cast arrays", castArrays);
 		//buildMovieObjects with movies and cast arrays
@@ -72,7 +71,7 @@ function buildMovieObjects (arrayOfMovies, castArrays) {
 	console.log("array of movies", arrayOfMovies);
 	for (let i=0; i<arrayOfMovies.length; i++) {
 		arrayOfMovies[i].actors = castArrays[i];
-	}//for each movie,givethe shortcast,and makeitaproperty on the object called actors
+	}//for each movie, give the shortcast,and make it a property on the object called actors
 	console.log("movie objects", arrayOfMovies);
 	return arrayOfMovies;// return array of movie objects with new property on each object, so we can fill templates 
 }

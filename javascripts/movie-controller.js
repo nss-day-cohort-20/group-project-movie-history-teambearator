@@ -16,7 +16,10 @@ movieController.runSearch = () => {
 	if ($('#yourMovies').is(':checked')) {
 		// fbSearch.whatever();
 		console.log("my movies checked and searched!");
-
+		movieFactory.getUserMovies()
+		.then( function(userMovies) {
+			templateBuilder.printMovieList(userMovies);
+		});
 	} else {
 		return new Promise (function (resolve, reject) {
 			newSearch.getMovies(userInput)

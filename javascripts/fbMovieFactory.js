@@ -5,6 +5,7 @@ let fbURL = "https://moviehistoryteambearator.firebaseio.com";
 let firebase = require('./fb-config');
 let fbFactory = {};
 
+//TODO verify if working;
 fbFactory.getUserMovies = () => {
 	return new Promise( (resolve, reject) => {
 		let currentUser = firebase.auth().currentUser.uid;
@@ -16,6 +17,7 @@ fbFactory.getUserMovies = () => {
 	});
 };
 
+//adds a movie with the user's ID attached as a property;
 fbFactory.addMovie = (movieToBeAdded) => {
 	return new Promise( (resolve, reject) => {
 		let currentUser = firebase.auth().currentUser.uid;
@@ -31,41 +33,42 @@ fbFactory.addMovie = (movieToBeAdded) => {
 	});
 };
 
-fbFactory.giveMovieRating = (rating, movieObj) => {
-	movieObj.rating = rating;
+// modifies the rating property on the movie object to the users input;
+fbFactory.giveMovieRating = (rating, movieId) => {
+	let movRating = {rating};
 	return new Promise( (resolve, reject) => {
 		// let currentUser = firebase.auth().currentUser.uid;
 		$.ajax({
-			url: `${fbURL}/movies/${movieObj}.json`,
+			url: `${fbURL}/movies/${movieId}.json`,
 			type: "PATCH",
-			data: JSON.stringify(movieObj) //not sure if necessary;
+			data: JSON.stringify(movRating) //not sure if necessary;
 		}).done( (data) => {
 			resolve(data);
 		});
 	});
 };
 
-fbFactory.markMovieAsWatched = (movieObj) => {
-	movieObj.watched = true;
+//modifies the watched property on the movie object to be true;
+fbFactory.markMovieAsWatched = (movieId) => {
+	let movWatched = {watched: true};
 	return new Promise( (resolve, reject) => {
 		// let currentUser = firebase.auth().currentUser.uid;
 		$.ajax({
-			url: `${fbURL}/movies/${movieObj}.json`,
+			url: `${fbURL}/movies/${movieId}.json`,
 			type: "PATCH",
-			data: JSON.stringify(movieObj) //not sure if necessary;
+			data: JSON.stringify(movWatched) //not sure if necessary;
 		}).done( (data) => {
 			resolve(data);
 		});
 	});
 };
 
-//takes a movie object, and removes from firebase;
-fbFactory.deleteMovie = (movieObj) => {
-	if (movieObj) {
+//takes a movies unique ID, and removes from firebase;
+fbFactory.deleteMovie = (movieId) => {
+	if (movieId) {
 		return new Promise( (resolve, reject) => {
-			// let currentUser = firebase.auth().currentUser.uid;
 			$.ajax({
-				url: `${fbURL}/movies/${movieObj}.json`,
+				url: `${fbURL}/movies/${movieId}.json`,
 				type: "DELETE"
 			}).done( (data) => {
 				resolve (data);
@@ -74,7 +77,6 @@ fbFactory.deleteMovie = (movieObj) => {
 	} else {
 		console.log("delete failed");
 	}
-
 };
 
 module.exports = fbFactory;

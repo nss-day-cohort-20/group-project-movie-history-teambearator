@@ -12,8 +12,23 @@
     {{/each}}
     {{else}} <p class="card-text actors">| No actors listed |</p>
     {{/if}}
-   <button class="btn btn-primary watchlist">Add To Watchlist</button>
-   <button class="btn btn-primary delete">Delete</button>
+    {{for}}
+    <div class="row">
+      <div class="col-md-1"></div>
+      <div value="1" class="col-md-1 glyphicon glyphicon-star star 1"></div>
+      <div value="2" class="col-md-1 glyphicon glyphicon-star star 2"></div>
+      <div value="3" class="col-md-1 glyphicon glyphicon-star star 3"></div>
+      <div value="4" class="col-md-1 glyphicon glyphicon-star star 4"></div>
+      <div value="5" class="col-md-1 glyphicon glyphicon-star star 5"></div>
+      <div class="col-md-1"></div>
+      <div value="6" class="col-md-1 glyphicon glyphicon-star star 6"></div>
+      <div value="7" class="col-md-1 glyphicon glyphicon-star star 7"></div>
+      <div value="8" class="col-md-1 glyphicon glyphicon-star star 8"></div>
+      <div value="9" class="col-md-1 glyphicon glyphicon-star star 9"></div>
+      <div value="10" class="col-md-1 glyphicon glyphicon-star star 10"></div>
+    </div>
+    <button class="btn btn-primary watchlist">Add To Watchlist</button>
+    <button class="btn btn-primary delete">Delete</button>
   </div>
 </div>
 

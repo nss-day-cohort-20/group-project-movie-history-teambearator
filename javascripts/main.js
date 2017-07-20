@@ -17,7 +17,7 @@ $("#login").click(function() {
  		// movieController.loadMoviesToDom();
  		$('#logout').toggleClass('isHidden');
  		$('#login').toggleClass('isHidden');
-	});
+ 	});
 });
 
 //user can log out by clicking logout button and page refreshes
@@ -41,10 +41,10 @@ $(document).on("click", '.watchlist', function() {
 	let movieId = $(this).parent().parent().attr('id');
 	console.log("movieId", movieId);
 	let movieMatch = movieController.selectedMovies;
-		console.log("selected movies?", movieMatch);
-		for(var i = 0; i < movieMatch.length; i++) {
-			if(movieMatch[i].id == movieId) {
-				movieFactory.addMovie(movieMatch[i]);
+	console.log("selected movies?", movieMatch);
+	for(var i = 0; i < movieMatch.length; i++) {
+		if(movieMatch[i].id == movieId) {
+			movieFactory.addMovie(movieMatch[i]);
 				// .then( function(movieObjj){
 				// 	console.log("movieObjj", movieObjj);
 				// });
@@ -62,9 +62,23 @@ $(document).on("click", '.watchlist', function() {
 		// 	console.log(selectedMovie);
 		// 	movieFactory.addMovie(selectedMovie[0]);
 		// });
-});
+	});
 
 $('#messageSubmitButton').click ( function () {
 	movieController.runSearch();
 });
+
+$(document).on("click", ".glyphicon", function(){
+	let starsSiblings = $(this).siblings().attr("value")<3;
+console.log(starsSiblings);
+	// let starId = $(this).attr("value");
+	// if ()
+});
+
+
+
+
+
+
+
 

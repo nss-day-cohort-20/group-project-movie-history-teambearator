@@ -5,6 +5,8 @@ let movieController= {};
 let newSearch = require('./apiMovieFactory');
 let actorUrl = "https://api.themoviedb.org/3/movie/";
 let moviedbData = require("./api-getter")();
+let movieFactory = require('./fbMovieFactory');
+
 
 	//see which radio button is checked, then launch search based on user input
 

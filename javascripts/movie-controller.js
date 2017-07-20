@@ -14,14 +14,14 @@ let templateBuilder = require('./template-builder');
 movieController.runSearch = () => {
 	let userInput = $("#userMessageInput").val();
 	console.log(userInput);
-	if ($('#yourMovies').is(':checked')) {
-		// fbSearch.whatever();
-		console.log("my movies checked and searched!");
-		movieFactory.getUserMovies()
-		.then( function(userMovies) {
-			templateBuilder.printMovieList(userMovies);
-		});
-	} else {
+	// if ($('#yourMovies').is(':checked')) {
+	// 	// fbSearch.whatever();
+	// 	console.log("my movies checked and searched!");
+	// 	movieFactory.getUserMovies()
+	// 	.then( function(userMovies) {
+	// 		templateBuilder.printMovieList(userMovies);
+	// 	});
+	// } else {
 		return new Promise (function (resolve, reject) {
 			newSearch.getMovies(userInput)
 			.then ( function (data) {
@@ -38,7 +38,8 @@ movieController.runSearch = () => {
 			});
 
 		});
-	}
+
+	// }
 };
 
 function buildCastPromises (movieArray) {
@@ -84,6 +85,9 @@ function buildMovieObjects (arrayOfMovies, castArrays) {
 	console.log("movie objects", arrayOfMovies);
 	movieArrayThing = arrayOfMovies;
 	movieController.selectedMovies = movieArrayThing;
+	movieFactory.getFirebaseKeys();
+
+
 	// return array of movie objects with new property on each object, so we can fill templates
 	templateBuilder.printMovieList(arrayOfMovies);
 }

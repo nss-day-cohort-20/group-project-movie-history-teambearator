@@ -79,4 +79,28 @@ fbFactory.deleteMovie = (movieId) => {
 	}
 };
 
+fbFactory.getFirebaseKeys = () => {
+	fbFactory.getUserMovies()
+	.then( function(usersMovies) {
+		console.log("user keys", Object.keys(usersMovies));
+	});
+};
+// fbFactory.getFirebaseKeys = () => {
+// let currentUser = firebase.auth().currentUser.uid;
+// return new Promise( (resolve, reject) => {
+// 	$.ajax({
+// 		url: `${fbURL}/movies.json`
+// 	}).done( (data) => {
+// 		let usersMovies = [];
+// 		data.filter(function(movie) {
+// 			if (movie.uid === currentUser) {
+// 				;
+// 		})
+// 		console.log(usersMovies);
+// 		// let fbKeys = Object.keys(data);
+// 	});
+// 	//TODO: reject statement;
+// });
+// };
+
 module.exports = fbFactory;

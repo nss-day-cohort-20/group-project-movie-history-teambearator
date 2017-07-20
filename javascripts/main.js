@@ -4,8 +4,8 @@ let $ = require('jquery');
 let movieFactoryAPI = require('./apiMovieFactory.js');
 let movieController = require('./movie-controller.js');
 let userFactory = require('./user-factory.js');
+let movieFactory = require('./fbMovieFactory.js');
 //let apiGetter = require('./api-config.js');
-
 //event listeners
 
 $("#login").click(function() {
@@ -23,7 +23,6 @@ $("#login").click(function() {
 //user can log out by clicking logout button and page refreshes
 $("#logout").click(function(){
 	userFactory.logOutGoogle();
-
 });
 
 //whether the user hits enter or clicks "submit" they run the search function

@@ -72,6 +72,7 @@ function addActors (movies, actors) {
 		return buildMovieObjects(movies, castArrays);
 }
 
+let movieArrayThing;
 
 //build the object that gets templateified -- need the actors
 function buildMovieObjects (arrayOfMovies, castArrays) {
@@ -80,6 +81,8 @@ function buildMovieObjects (arrayOfMovies, castArrays) {
 		arrayOfMovies[i].actors = castArrays[i];
 	}//for each movie, give the shortcast,and make it a property on the object called actors
 	console.log("movie objects", arrayOfMovies);
+	movieArrayThing = arrayOfMovies;
+	movieController.selectedMovies = movieArrayThing;
 	// return array of movie objects with new property on each object, so we can fill templates
 	templateBuilder.printMovieList(arrayOfMovies);
 }

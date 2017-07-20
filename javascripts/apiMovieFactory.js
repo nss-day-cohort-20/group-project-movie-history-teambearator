@@ -29,23 +29,9 @@ newSearch.getCastDetails = (url) => {
 		$.ajax({
 			url: url
 		}).done(function(castData) {
-	// console.log("castData", castData);
 		resolve(castData);
 		});
 	});
 };
-
-// newSearch.getActors = (movieID) => {
-// 	let castPromises = [];
-// 	movieID.forEach(function(item){
-// 		return new Promise ( (resolve, reject) => {
-// 			$.ajax({
-// 				url: `${actorUrl}${movieID}/credits?api_key=${moviedbData.api_key}`
-// 			});
-
-// 		});
-// 	});
-// };
-
 
 module.exports = newSearch;

@@ -19,12 +19,13 @@ movieController.runSearch = () => {
 			newSearch.getMovies(userInput)
 			.then ( function (data) {
 				console.log("reslts", data.results);
-				let tenNewMovies = data.results.slice(0, 10);
+				let tenNewMovies = data.results.slice(0, 10);//slice off first 10 results
 				console.log("ten movies", tenNewMovies);
-				let castPromisesArray = buildCastPromises(tenNewMovies);
-				Promise.all(castPromisesArray)
+				let castPromisesArray = buildCastPromises(tenNewMovies);//go through movies,grab id, get actor info  
+				Promise.all(castPromisesArray) //array of promises --data below is castPromises resolved, which isthe actor list for each movie
 				.then(function(data) {
 					resolve(addActors(tenNewMovies, data));
+					//resolve(variable for the next function in the promise string) the result of addActors
 				});
 			});
 			
@@ -34,34 +35,34 @@ movieController.runSearch = () => {
 
 function buildCastPromises (movieArray) {
 	let movieIdArray = movieArray.map(function (item) {
-		return item.id;
+		return item.id; //ten movie ids 
 	});
-	let castPromises = [];
+	let castPromises = [];  
 	movieIdArray.forEach( (item) => {
-		let url = `${actorUrl}${item}/credits?api_key=${moviedbData.api_key}`;
+		let url = `${actorUrl}${item}/credits?api_key=${moviedbData.api_key}`;//this url goes into getCastDetails Movie factory
 		castPromises.push(newSearch.getCastDetails(url));
+		//result of getCastDetails goes into castPromises array -- castPromises is now an array of promises
 	});
 
 	console.log("movieIdArray", movieIdArray);
 	return castPromises;
 }
-	// getActors(movieIdArray);
 
 
 
 function addActors (movies, actors) {
+	//pass in data from resolved promise.all
 	let castArrays = [];
 	movies.forEach(function(movie, index) {
-		let tenMovieCasts= actors[index].cast;
-		//console.log("ten cast", tenMovieCasts);
+		//iteratethrough movies using index
+		let tenMovieCasts= actors[index].cast; //get whole casts for all ten movies
 		let shortCasts = tenMovieCasts.slice(0,3);
-		castArrays.push(shortCasts);
+		//sliceoff the first 3 cast members for each movie
+		castArrays.push(shortCasts); //add shortCasts to cast arrays
 		console.log("shortcasts", shortCasts);
-		// tenMovieCasts.forEach(function(item) {
-		// 	//let shortCast = item.slice(0,4);
-		// });
 	});
 		console.log("cast arrays", castArrays);
+		//buildMovieObjects with movies and cast arrays
 		return buildMovieObjects(movies, castArrays);
 }
 
@@ -71,9 +72,9 @@ function buildMovieObjects (arrayOfMovies, castArrays) {
 	console.log("array of movies", arrayOfMovies);
 	for (let i=0; i<arrayOfMovies.length; i++) {
 		arrayOfMovies[i].actors = castArrays[i];
-	}
+	}//for each movie,givethe shortcast,and makeitaproperty on the object called actors
 	console.log("movie objects", arrayOfMovies);
-	return arrayOfMovies;
+	return arrayOfMovies;// return array of movie objects with new property on each object, so we can fill templates 
 }
 
 

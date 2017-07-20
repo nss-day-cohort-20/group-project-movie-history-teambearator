@@ -32,6 +32,7 @@ movieController.runSearch = () => {
 					console.log("object of objects with arrays of cast members", data);
 					resolve(addActors(tenNewMovies, data));
 					//resolve(variable for the next function in the promise string) the result of addActors
+
 				});
 			});
 
@@ -79,8 +80,13 @@ function buildMovieObjects (arrayOfMovies, castArrays) {
 		arrayOfMovies[i].actors = castArrays[i];
 	}//for each movie, give the shortcast,and make it a property on the object called actors
 	console.log("movie objects", arrayOfMovies);
-	return arrayOfMovies;// return array of movie objects with new property on each object, so we can fill templates
+	// return array of movie objects with new property on each object, so we can fill templates
+	templateBuilder.printMovieList(arrayOfMovies);
 }
 
+
+function printToDOM(){
+
+}
 
 module.exports = movieController;

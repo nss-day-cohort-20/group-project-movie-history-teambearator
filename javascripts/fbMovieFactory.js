@@ -31,26 +31,50 @@ fbFactory.addMovie = (movieToBeAdded) => {
 	});
 };
 
-fbFactory.giveMovieRating = (rating, movieId) => {
+fbFactory.giveMovieRating = (rating, movieObj) => {
+	movieObj.rating = rating;
 	return new Promise( (resolve, reject) => {
-		let currentUser = firebase.auth().currentUser.uid;
+		// let currentUser = firebase.auth().currentUser.uid;
 		$.ajax({
-			url: `${fbURL}/movies/${movieId}.json`,
+			url: `${fbURL}/movies/${movieObj}.json`,
 			type: "PATCH",
-			data: JSON.stringify()
+			data: JSON.stringify(movieObj) //not sure if necessary;
+		}).done( (data) => {
+			resolve(data);
 		});
 	});
 };
 
-fbFactory.markMovieAsWatched = (movieId) => {
+fbFactory.markMovieAsWatched = (movieObj) => {
+	movieObj.watched = true;
 	return new Promise( (resolve, reject) => {
-		let currentUser = firebase.auth().currentUser.uid;
+		// let currentUser = firebase.auth().currentUser.uid;
+		$.ajax({
+			url: `${fbURL}/movies/${movieObj}.json`,
+			type: "PATCH",
+			data: JSON.stringify(movieObj) //not sure if necessary;
+		}).done( (data) => {
+			resolve(data);
+		});
 	});
 };
 
+//takes a movie object, and removes from firebase;
+fbFactory.deleteMovie = (movieObj) => {
+	if (movieObj) {
+		return new Promise( (resolve, reject) => {
+			// let currentUser = firebase.auth().currentUser.uid;
+			$.ajax({
+				url: `${fbURL}/movies/${movieObj}.json`,
+				type: "DELETE"
+			}).done( (data) => {
+				resolve (data);
+			});
+		});
+	} else {
+		console.log("delete failed");
+	}
 
-
-
-
+};
 
 module.exports = fbFactory;

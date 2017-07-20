@@ -3,6 +3,7 @@
 let $ = require('jquery');
 let movieController= {};
 let newSearch = require('./apiMovieFactory');
+let movieFactory = require('./fbMovieFactory');
 
 	//see which radio button is checked, then launch search based on user input
 movieController.runSearch = () => {

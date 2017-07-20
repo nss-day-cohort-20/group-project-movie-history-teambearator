@@ -13,6 +13,7 @@ let templateBuilder = require('./template-builder');
 
 movieController.runSearch = () => {
 	let userInput = $("#userMessageInput").val();
+	console.log(userInput);
 	if ($('#yourMovies').is(':checked')) {
 		// fbSearch.whatever();
 		console.log("my movies checked and searched!");

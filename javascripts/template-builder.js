@@ -6,6 +6,9 @@ let movieListTemplate = require('../templates/movieCard.hbs');
 
 let templateBuilder = Object.create(null);
 
+
+
+
 templateBuilder.makeMovieList =(movieList)=>{
 	return movieListTemplate();
 	//need data to fill in template

@@ -6,6 +6,7 @@ let newSearch = require('./apiMovieFactory');
 let actorUrl = "https://api.themoviedb.org/3/movie/";
 let moviedbData = require("./api-getter")();
 let movieFactory = require('./fbMovieFactory');
+let templateBuilder = require('./template-builder');
 
 
 	//see which radio button is checked, then launch search based on user input
@@ -22,24 +23,25 @@ movieController.runSearch = () => {
 			.then ( function (data) {
 				let tenNewMovies = data.results.slice(0, 10);//slice off first 10 results
 				console.log("ten movies", tenNewMovies);
-				let castPromisesArray = buildCastPromises(tenNewMovies);//go through movies,grab id, get actor info  
+				let castPromisesArray = buildCastPromises(tenNewMovies);//go through movies,grab id, get actor info
 				Promise.all(castPromisesArray) //array of promises --data below is castPromises resolved, which isthe actor list for each movie
 				.then(function(data) {
 					console.log("object of objects with arrays of cast members", data);
 					resolve(addActors(tenNewMovies, data));
 					//resolve(variable for the next function in the promise string) the result of addActors
+
 				});
 			});
-			
+
 		});
 	}
 };
 
 function buildCastPromises (movieArray) {
 	let movieIdArray = movieArray.map(function (item) {
-		return item.id; //ten movie ids 
+		return item.id; //ten movie ids
 	});
-	let castPromises = [];  
+	let castPromises = [];
 	movieIdArray.forEach( (item) => {
 		let url = `${actorUrl}${item}/credits?api_key=${moviedbData.api_key}`;//this url goes into getCastDetails Movie factory
 		castPromises.push(newSearch.getCastDetails(url));
@@ -75,8 +77,13 @@ function buildMovieObjects (arrayOfMovies, castArrays) {
 		arrayOfMovies[i].actors = castArrays[i];
 	}//for each movie, give the shortcast,and make it a property on the object called actors
 	console.log("movie objects", arrayOfMovies);
-	return arrayOfMovies;// return array of movie objects with new property on each object, so we can fill templates 
+	// return array of movie objects with new property on each object, so we can fill templates
+	templateBuilder.printMovieList(arrayOfMovies);
 }
 
+
+function printToDOM(){
+
+}
 
 module.exports = movieController;

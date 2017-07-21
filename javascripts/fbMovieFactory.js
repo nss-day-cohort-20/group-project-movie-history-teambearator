@@ -12,6 +12,7 @@ fbFactory.getUserMovies = () => {
 		$.ajax({
 			url: `${fbURL}/movies.json?orderBy="uid"&equalTo="${currentUser}"`
 		}).done( (movieData) => {
+			console.log("get user movies", movieData);
 			resolve(movieData);
 		});
 	});
@@ -78,5 +79,23 @@ fbFactory.deleteMovie = (movieId) => {
 		console.log("delete failed");
 	}
 };
+
+// fbFactory.getFirebaseKeys = () => {
+// let currentUser = firebase.auth().currentUser.uid;
+// return new Promise( (resolve, reject) => {
+// 	$.ajax({
+// 		url: `${fbURL}/movies.json`
+// 	}).done( (data) => {
+// 		let usersMovies = [];
+// 		data.filter(function(movie) {
+// 			if (movie.uid === currentUser) {
+// 				;
+// 		})
+// 		console.log(usersMovies);
+// 		// let fbKeys = Object.keys(data);
+// 	});
+// 	//TODO: reject statement;
+// });
+// };
 
 module.exports = fbFactory;

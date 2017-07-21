@@ -60,3 +60,34 @@ $('#messageSubmitButton').click ( function () {
 	movieController.runSearch();
 });
 
+$('#filterUntracked').click( () => {
+//function that makes sure no duplicates happen and print only API stuff to DOM
+});
+
+$('#filterWatchlist').click( () => {
+	movieFactory.getUserMovies()
+	.then (function (data) {
+		console.log("data?", data);
+		$(data).each(function(index) {
+			Object.keys(this).forEach(function(item) {
+				if (data[item].watched) {
+					console.log("item was watched", data[item]);
+				} else {
+					console.log("unwatched stuff", data[item]);
+				}
+
+			});
+			console.log("index", index);
+			
+		});
+	});
+});
+
+
+$('#filterWatched').click( () => {
+//get all FB movies, print only those where watched=true
+});
+
+$('#filterFaves').click( () => {
+//get all FB movies, print only those where rating >=9
+});

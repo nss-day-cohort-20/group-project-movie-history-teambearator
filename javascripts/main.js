@@ -28,10 +28,17 @@ $("#logout").click(function(){
 //whether the user hits enter or clicks "submit" they run the search function
 $('#userMessageInput').keyup( function (event) {
 	if (event.which == '13' && $('#userMessageInput').val() !== "") {
-		movieController.runSearch()
-		.then ( (movieObjects) => {
-			console.log("movie objects", movieObjects);
+		movieController.runSearchInAPI()
+		.then(function(moviesSearched) {
+			console.log("movies searched", moviesSearched);
+			return movieFactory.getUserMovies();
+		})
+		.then(function(usersMovies) {
+			console.log("users movies", usersMovies);
 		});
+		// movieController.runSearch()
+		// .then ( (movieObjects) => {
+		// 	console.log("movie objects", movieObjects);
 		$('#userMessageInput').val("");
 	}
 });
@@ -42,27 +49,13 @@ $(document).on("click", '.watchlist', function() {
 	let movieId = $(this).parent().parent().attr('id');
 	console.log("movieId", movieId);
 	let movieMatch = movieController.selectedMovies;
-		console.log("selected movies?", movieMatch);
-		for(var i = 0; i < movieMatch.length; i++) {
-			if(movieMatch[i].id == movieId) {
-				movieFactory.addMovie(movieMatch[i]);
-				// .then( function(movieObjj){
-				// 	console.log("movieObjj", movieObjj);
-				// });
-			}
-			console.log("movieMatch", movieMatch[i], movieMatch[i].id);
+	console.log("selected movies?", movieMatch);
+	for(var i = 0; i < movieMatch.length; i++) {
+		if(movieMatch[i].id == movieId) {
+			movieFactory.addMovie(movieMatch[i]);
+			console.log(movieMatch[i]);
 		}
-		// movieMatch.forEach(function(movie) {
-		// 	console.log(movie);
-		// 	let selectedMovie = movie.id.includes(movieId);
-		// 	console.log("selected", selectedMovie, movie);
-		// });
-		// movieMatch.filter( function(movie) {
-		// 	console.log(movie);
-		// 	let selectedMovie = movie.id.includes(movieId);
-		// 	console.log(selectedMovie);
-		// 	movieFactory.addMovie(selectedMovie[0]);
-		// });
+	}
 });
 
 $('#messageSubmitButton').click ( function () {

@@ -12,6 +12,7 @@ fbFactory.getUserMovies = () => {
 		$.ajax({
 			url: `${fbURL}/movies.json?orderBy="uid"&equalTo="${currentUser}"`
 		}).done( (movieData) => {
+			console.log("get user movies", movieData);
 			resolve(movieData);
 		});
 	});
@@ -79,12 +80,6 @@ fbFactory.deleteMovie = (movieId) => {
 	}
 };
 
-fbFactory.getFirebaseKeys = () => {
-	fbFactory.getUserMovies()
-	.then( function(usersMovies) {
-		console.log("user keys", Object.keys(usersMovies));
-	});
-};
 // fbFactory.getFirebaseKeys = () => {
 // let currentUser = firebase.auth().currentUser.uid;
 // return new Promise( (resolve, reject) => {

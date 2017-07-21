@@ -100,18 +100,18 @@ movieController.filterOutUserMovies = (usersMovieArr, apiMovieArr) => {
 	let userInput = $("#userMessageInput").val();
 	let userMoviesByString = userMoviesSearched(usersMovieArr, userInput)
 	.then(function(searchedUserMovies){
-
+		// console.log('searchedUserMovies', searchedUserMovies);
+		let moviesToDisplay = searchedUserMovies.concat(apiMovieArr);
+		templateBuilder.printMovieList(moviesToDisplay);
 	});
-	let moviesToDisplay = userMoviesByString.concat(apiMovieArr);
-	console.log("movies to display", moviesToDisplay);
 
-	templateBuilder.printMovieList(moviesToDisplay);
 };
 
 function userMoviesSearched(allUserMovies, string) {
 	return new Promise(function(resolve, reject) {
-		let newArr = allUserMovies.filter(function(object) {
-			return object.name.match(new RegExp(string, "i"));
+		let newArr = allUserMovies.filter(function(userMovie) {
+			console.log('userMovie', userMovie);
+			return userMovie.title.match(new RegExp(string, "i"));
 		});
 		resolve(newArr);
 	});

@@ -58,6 +58,16 @@ $(document).on("click", '.watchlist', function() {
 	}
 });
 
+$(document). on("click", '.delete', function(){
+	console.log ("click on delete works");
+	let movieId = $(this).parent().parent().attr('id');
+	movieFactory.deleteMovie(movieId)
+	//delete movie object from firebase
+	.then(()=>{
+	$('#movieId').addClass('isHidden'); //hide that movie in the DOM until the next refresh
+	});
+});
+
 $('#messageSubmitButton').click ( function () {
 	movieController.runSearch();
 });

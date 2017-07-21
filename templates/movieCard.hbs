@@ -13,7 +13,9 @@
     {{else}} <p class="card-text actors">| No actors listed |</p>
     {{/if}}
    <button class="btn btn-primary watchlist">Add To Watchlist</button>
+   {{#if user_id}}
    <button class="btn btn-primary delete">Delete</button>
+   {{/if}}
    {{!-- TODO: not everything needs delete button --}}
   </div>
 </div>

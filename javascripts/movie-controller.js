@@ -13,7 +13,6 @@ let templateBuilder = require('./template-builder');
 
 movieController.runSearchInAPI = () => {
 	let userInput = $("#userMessageInput").val();
-	console.log(userInput);
 	return new Promise (function (resolve, reject) {
 		newSearch.getMovies(userInput)
 		.then ( function (data) {
@@ -82,7 +81,7 @@ movieController.filterOutUserMovies = (usersMovieArr, apiMovieArr) => {
 	let userMoviesIds = usersMovieArr.map(function(movie) {
 		return movie.id;
 	});
-	let moviesToFilterOut = apiMovieArr.filter(function(movie) {
+	let moviesToFilterOut = apiMovieArr.filter(function(movie) { // user movies same as api search movies
 		for(var i=0;i<userMoviesIds.length; i++) {
 			if(movie.id === userMoviesIds[i]) {
 				return movie;
@@ -98,21 +97,28 @@ movieController.filterOutUserMovies = (usersMovieArr, apiMovieArr) => {
 		return apiMovieArr;
 	});
 	let userInput = $("#userMessageInput").val();
-	let userMoviesByString = userMoviesSearched(usersMovieArr, userInput)
+	console.log("userInput",userInput );
+	userMoviesSearched(usersMovieArr, userInput)
 	.then(function(searchedUserMovies){
+	console.log(searchedUserMovies, "searchedUserMovies");
+	let moviesToDisplay = searchedUserMovies.concat(apiMovieArr);
 
-	});
-	let moviesToDisplay = userMoviesByString.concat(apiMovieArr);
 	console.log("movies to display", moviesToDisplay);
-
 	templateBuilder.printMovieList(moviesToDisplay);
+	});
+
 };
 
 function userMoviesSearched(allUserMovies, string) {
 	return new Promise(function(resolve, reject) {
+
 		let newArr = allUserMovies.filter(function(object) {
-			return object.name.match(new RegExp(string, "i"));
+			console.log("object.title",object.title );
+			return object.title.match(new RegExp(string, 'i'));
+			// if (object.title.toLowerCase().indexOf(string) != -1 ) 
+				// return newArr;
 		});
+		console.log("newArr",newArr);
 		resolve(newArr);
 	});
 }

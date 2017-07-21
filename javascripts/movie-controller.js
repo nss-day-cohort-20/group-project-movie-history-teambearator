@@ -72,16 +72,13 @@ function buildMovieObjects (arrayOfMovies, castArrays) {
 		arrayOfMovies[i].actors = castArrays[i];
 	}//for each movie, give the shortcast,and make it a property on the object called actors
 	console.log("movie objects", arrayOfMovies);
-	// let movieArrayThing = arrayOfMovies;
-	// movieController.selectedMovies = movieArrayThing;
+	let movieArrayThing = arrayOfMovies;
+	movieController.selectedMovies = movieArrayThing;
 				// return array of movie objects with new property on each object, so we can fill templates
 	templateBuilder.printMovieList(arrayOfMovies);
 	return arrayOfMovies;
 }
 
 
-function printToDOM(){
-
-}
 
 module.exports = movieController;

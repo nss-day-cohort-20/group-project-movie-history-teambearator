@@ -1,7 +1,7 @@
 'use strict';
 
 let $ = require('jquery');
-let fbURL = "https://moviehistoryteambearator.firebaseio.com";
+let fbURL = "https://schmoovies-e903e.firebaseio.com/";
 let firebase = require('./fb-config');
 let fbFactory = {};
 

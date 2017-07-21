@@ -44,7 +44,7 @@ $('#userMessageInput').keyup( function (event) {
 		// movieController.runSearch()
 		// .then ( (movieObjects) => {
 		// 	console.log("movie objects", movieObjects);
-		$('#userMessageInput').val("");
+		// $('#userMessageInput').val("");
 	}
 });
 

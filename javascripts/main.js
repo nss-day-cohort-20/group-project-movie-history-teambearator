@@ -5,6 +5,7 @@ let movieFactoryAPI = require('./apiMovieFactory.js');
 let movieController = require('./movie-controller.js');
 let userFactory = require('./user-factory.js');
 let movieFactory = require('./fbMovieFactory.js');
+let templateBuilder = require('./template-builder.js');
 //let apiGetter = require('./api-config.js');
 //event listeners
 
@@ -25,16 +26,20 @@ $("#logout").click(function(){
 	userFactory.logOutGoogle();
 });
 
+//ERROR ERROR ERROR!!!!
 //whether the user hits enter or clicks "submit" they run the search function
 $('#userMessageInput').keyup( function (event) {
 	if (event.which == '13' && $('#userMessageInput').val() !== "") {
+		let moviesSearchedFromAPI;
 		movieController.runSearchInAPI()
 		.then(function(moviesSearched) {
-			console.log("movies searched", moviesSearched);
+			moviesSearchedFromAPI = moviesSearched;
+			console.log("movies searched", moviesSearchedFromAPI);
 			return movieFactory.getUserMovies();
 		})
 		.then(function(usersMovies) {
-			console.log("users movies", usersMovies);
+			let arrayifiedUsersMovies = Object.values(usersMovies);
+			movieController.filterOutUserMovies(arrayifiedUsersMovies, moviesSearchedFromAPI);
 		});
 		// movieController.runSearch()
 		// .then ( (movieObjects) => {
@@ -43,9 +48,10 @@ $('#userMessageInput').keyup( function (event) {
 	}
 });
 
-$(document).on("click", '.watchlist', function() {
 
-	console.log("click is working");
+
+//add watchlist button adds
+$(document).on("click", '.watchlist', function() {
 	let movieId = $(this).parent().parent().attr('id');
 	console.log("movieId", movieId);
 	let movieMatch = movieController.selectedMovies;
@@ -59,6 +65,6 @@ $(document).on("click", '.watchlist', function() {
 });
 
 $('#messageSubmitButton').click ( function () {
-	movieController.runSearch();
+	// movieController.runSearch();
 });
 

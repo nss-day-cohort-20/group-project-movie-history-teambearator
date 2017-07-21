@@ -31,8 +31,6 @@ movieController.runSearchInAPI = () => {
 	// }
 };
 
-
-
 function buildCastPromises (movieArray) {
 	let movieIdArray = movieArray.map(function (item) {
 		return item.id; //ten movie ids
@@ -72,13 +70,52 @@ function buildMovieObjects (arrayOfMovies, castArrays) {
 		arrayOfMovies[i].actors = castArrays[i];
 	}//for each movie, give the shortcast,and make it a property on the object called actors
 	console.log("movie objects", arrayOfMovies);
-	// let movieArrayThing = arrayOfMovies;
-	// movieController.selectedMovies = movieArrayThing;
+	let movieArrayThing = arrayOfMovies;
+	movieController.selectedMovies = movieArrayThing;
 				// return array of movie objects with new property on each object, so we can fill templates
-	templateBuilder.printMovieList(arrayOfMovies);
+	// templateBuilder.printMovieList(arrayOfMovies);
 	return arrayOfMovies;
 }
 
+//filters out usermovie from the api that gets put in the DOM. TODO: make concat'd usersMovies fit search term;
+movieController.filterOutUserMovies = (usersMovieArr, apiMovieArr) => {
+	let userMoviesIds = usersMovieArr.map(function(movie) {
+		return movie.id;
+	});
+	let moviesToFilterOut = apiMovieArr.filter(function(movie) {
+		for(var i=0;i<userMoviesIds.length; i++) {
+			if(movie.id === userMoviesIds[i]) {
+				return movie;
+			}
+		}
+	});
+	let filteredMovies = apiMovieArr.filter(function(movie, index) {
+		for(var i = 0; i<moviesToFilterOut.length;i++) {
+			if(movie.id === moviesToFilterOut[i].id) {
+				apiMovieArr.splice([index], 1);
+			}
+		}
+		return apiMovieArr;
+	});
+	let userInput = $("#userMessageInput").val();
+	let userMoviesByString = userMoviesSearched(usersMovieArr, userInput)
+	.then(function(searchedUserMovies){
+
+	});
+	let moviesToDisplay = userMoviesByString.concat(apiMovieArr);
+	console.log("movies to display", moviesToDisplay);
+
+	templateBuilder.printMovieList(moviesToDisplay);
+};
+
+function userMoviesSearched(allUserMovies, string) {
+	return new Promise(function(resolve, reject) {
+		let newArr = allUserMovies.filter(function(object) {
+			return object.name.match(new RegExp(string, "i"));
+		});
+		resolve(newArr);
+	});
+}
 
 function printToDOM(){
 

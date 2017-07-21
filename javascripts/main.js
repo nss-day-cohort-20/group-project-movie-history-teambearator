@@ -44,8 +44,6 @@ $('#userMessageInput').keyup( function (event) {
 });
 
 $(document).on("click", '.watchlist', function() {
-
-	console.log("click is working");
 	let movieId = $(this).parent().parent().attr('id');
 	console.log("movieId", movieId);
 	let movieMatch = movieController.selectedMovies;

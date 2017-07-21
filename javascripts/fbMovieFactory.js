@@ -5,18 +5,26 @@ let fbURL = "https://moviehistoryteambearator.firebaseio.com";
 let firebase = require('./fb-config');
 let fbFactory = {};
 
-//TODO verify if working;
 fbFactory.getUserMovies = () => {
 	return new Promise( (resolve, reject) => {
 		let currentUser = firebase.auth().currentUser.uid;
 		$.ajax({
 			url: `${fbURL}/movies.json?orderBy="uid"&equalTo="${currentUser}"`
 		}).done( (movieData) => {
-			console.log("get user movies", movieData);
 			resolve(movieData);
 		});
 	});
 };
+
+//a helper function that adds firebase key as a property on object
+function addIds (movieData) {
+	var idArr = Object.keys(movieData);
+	idArr.forEach ( (key) => {
+		movieData[key].fbkey = key;
+	});
+	console.log("objects with fbkeys", movieData);
+	return movieData;
+}
 
 //adds a movie with the user's ID attached as a property;
 fbFactory.addMovie = (movieToBeAdded) => {
@@ -34,13 +42,14 @@ fbFactory.addMovie = (movieToBeAdded) => {
 	});
 };
 
+
 // modifies the rating property on the movie object to the users input;
-fbFactory.giveMovieRating = (rating, movieId) => {
+fbFactory.giveMovieRating = (rating, firebaseMovieKey) => {
 	let movRating = {rating};
 	return new Promise( (resolve, reject) => {
 		// let currentUser = firebase.auth().currentUser.uid;
 		$.ajax({
-			url: `${fbURL}/movies/${movieId}.json`,
+			url: `${fbURL}/movies/${firebaseMovieKey}.json`,
 			type: "PATCH",
 			data: JSON.stringify(movRating) //not sure if necessary;
 		}).done( (data) => {
@@ -50,12 +59,12 @@ fbFactory.giveMovieRating = (rating, movieId) => {
 };
 
 //modifies the watched property on the movie object to be true;
-fbFactory.markMovieAsWatched = (movieId) => {
+fbFactory.markMovieAsWatched = (firebaseMovieKey) => {
 	let movWatched = {watched: true};
 	return new Promise( (resolve, reject) => {
 		// let currentUser = firebase.auth().currentUser.uid;
 		$.ajax({
-			url: `${fbURL}/movies/${movieId}.json`,
+			url: `${fbURL}/movies/${firebaseMovieKey}.json`,
 			type: "PATCH",
 			data: JSON.stringify(movWatched) //not sure if necessary;
 		}).done( (data) => {

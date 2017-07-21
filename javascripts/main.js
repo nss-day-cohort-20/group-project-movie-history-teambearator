@@ -44,8 +44,6 @@ $('#userMessageInput').keyup( function (event) {
 });
 
 $(document).on("click", '.watchlist', function() {
-
-	console.log("click is working");
 	let movieId = $(this).parent().parent().attr('id');
 	console.log("movieId", movieId);
 	let movieMatch = movieController.selectedMovies;
@@ -62,3 +60,42 @@ $('#messageSubmitButton').click ( function () {
 	movieController.runSearch();
 });
 
+$('#filterUntracked').click( () => {
+//function that makes sure no duplicates happen and print only API stuff to DOM
+});
+
+$('#filterWatchlist').click( () => {
+//filter through the movies on the DOM and only print the ones on the watchlist (unwatched)
+});
+
+
+$('#filterWatched').click( () => {
+	//filter through teh searched movies currently on the DOM and print only those with a rating of some kind
+});
+
+$('#filterFaves').click( () => {
+//of movies on the DOM, print only those where rating >=9
+});
+
+//probably useless (below)
+// function sortMoviesByWatched (unwatchedMoviesArray, watchedMoviesArray) {
+// 	watchedMoviesArray = [];
+// 	movieFactory.getUserMovies()//need to tie to search term of user, instead of print ALL user saved movies to DOM
+// 	.then (function (data) {
+// 		console.log("data?", data);
+// 		$(data).each(function(index) {
+// 			Object.keys(this).forEach(function(item) {
+// 				if (data[item].watched) {
+// 					console.log("item was watched", data[item]);
+// 					watchedMoviesArray.push(data[item]);
+// 				} else {
+// 					console.log("unwatched stuff", data[item]);
+// 					unwatchedMoviesArray.push(data[item]);
+// 					return unwatchedMoviesArray;
+// 				}
+// 				console.log("unwatched movies", unwatchedMoviesArray);
+
+// 			});
+// 		});
+// 	});
+// }

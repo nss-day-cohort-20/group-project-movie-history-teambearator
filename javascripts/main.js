@@ -9,6 +9,18 @@ let templateBuilder = require('./template-builder.js');
 //let apiGetter = require('./api-config.js');
 //event listeners
 
+// $(".login-page > div:gt(0)").hide();
+
+// setInterval(function() { 
+// $('.login-page > div:first')
+// .fadeOut(0)
+// .next()
+// .fadeIn(1000)
+// .end()
+// .appendTo('.login-page');
+// },  3000);
+
+
 $("#login").click(function() {
 	userFactory.logInGoogle()
 	//wrapped in promises automatically
@@ -16,8 +28,7 @@ $("#login").click(function() {
 		let user = result.user.uid;
 		console.log("user", user);
  		// movieController.loadMoviesToDom();
- 		$('#logout').toggleClass('isHidden');
- 		$('#login').toggleClass('isHidden');
+ 		$('.after-login-page').toggleClass('isHidden');
 	});
 });
 
@@ -58,8 +69,21 @@ $(document).on("click", '.watchlist', function() {
 	console.log("selected movies?", movieMatch);
 	for(var i = 0; i < movieMatch.length; i++) {
 		if(movieMatch[i].id == movieId) {
-			movieFactory.addMovie(movieMatch[i]);
-			console.log(movieMatch[i]);
+			let movieObj = {};
+			movieObj.id = movieMatch[i].id;
+			movieObj.title = movieMatch[i].title;
+			movieObj.actors = [];
+			movieMatch[i].actors.forEach( (actor) =>
+			{
+				movieObj.actors.push(actor.name);
+			});
+			movieObj.tracked = true;
+			movieObj.rating = 0;
+			movieObj.uid = movieMatch[i].uid;
+			movieObj.year = movieMatch[i].release_date.slice(0,4);
+			movieObj.poster_path = movieMatch[i].poster_path;
+			movieFactory.addMovie(movieObj);
+			console.log(movieObj);
 		}
 	}
 });

@@ -57,7 +57,7 @@ function addActors (movies, actors) {
 		//sliceoff the first 3 cast members for each movie
 		castArrays.push(shortCasts); //add shortCasts to cast arrays
 	});
-		console.log("cast arrays", castArrays);
+		// console.log("cast arrays", castArrays);
 		//buildMovieObjects with movies and cast arrays
 		return buildMovieObjects(movies, castArrays);
 }
@@ -68,7 +68,7 @@ function buildMovieObjects (arrayOfMovies, castArrays) {
 	for (let i=0; i<arrayOfMovies.length; i++) {
 		arrayOfMovies[i].actors = castArrays[i];
 	}//for each movie, give the shortcast,and make it a property on the object called actors
-	console.log("movie objects", arrayOfMovies);
+	// console.log("movie objects", arrayOfMovies);
 	let movieArrayThing = arrayOfMovies;
 	movieController.selectedMovies = movieArrayThing;
 				// return array of movie objects with new property on each object, so we can fill templates
@@ -97,13 +97,11 @@ movieController.filterOutUserMovies = (usersMovieArr, apiMovieArr) => {
 		return apiMovieArr;
 	});
 	let userInput = $("#userMessageInput").val();
-	console.log("userInput",userInput );
+	// console.log("userInput",userInput );
 	userMoviesSearched(usersMovieArr, userInput)
 	.then(function(searchedUserMovies){
-	console.log(searchedUserMovies, "searchedUserMovies");
+	// console.log(searchedUserMovies, "searchedUserMovies");
 	let moviesToDisplay = searchedUserMovies.concat(apiMovieArr);
-
-	console.log("movies to display", moviesToDisplay);
 	templateBuilder.printMovieList(moviesToDisplay);
 	});
 
@@ -113,12 +111,10 @@ function userMoviesSearched(allUserMovies, string) {
 	return new Promise(function(resolve, reject) {
 
 		let newArr = allUserMovies.filter(function(object) {
-			console.log("object.title",object.title );
+			// console.log("object.title",object.title );
 			return object.title.match(new RegExp(string, 'i'));
-			// if (object.title.toLowerCase().indexOf(string) != -1 ) 
-				// return newArr;
 		});
-		console.log("newArr",newArr);
+		// console.log("newArr",newArr);
 		resolve(newArr);
 	});
 }

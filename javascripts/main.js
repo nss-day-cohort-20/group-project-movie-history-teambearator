@@ -46,7 +46,6 @@ $('#userMessageInput').keyup( function (event) {
 		movieController.runSearchInAPI()
 		.then(function(moviesSearched) {
 			moviesSearchedFromAPI = moviesSearched;
-			console.log("movies searched", moviesSearchedFromAPI);
 			return movieFactory.getUserMovies();
 		})
 		.then(function(usersMovies) {
@@ -80,9 +79,7 @@ function buildObj(movieMatch)
 //add watchlist button adds
 $(document).on("click", '.watchlist', function() {
 	let movieId = $(this).parent().parent().attr('id');
-	console.log("movieId", movieId);
 	let movieMatch = movieController.selectedMovies;
-	console.log("selected movies?", movieMatch);
 	for(var i = 0; i < movieMatch.length; i++) {
 		if(movieMatch[i].id == movieId) {
 			let movieObj =  buildObj(movieMatch[i]);
@@ -92,8 +89,15 @@ $(document).on("click", '.watchlist', function() {
 	}
 });
 
-$(document).on('click', '.delete' ,() => {
-	let movieId = $(this).parent().parent().attr('id');
-	console.log("id-for delete", movieId);
+//delete button
+$(document).on('click', '.delete' ,function() {
+	// console.log("event.target",event.target);
+	let id = event.target.id.slice(7);
+	console.log("id-delete",id );
+	$(`#${id}`).remove(); //remove from screen
+	movieFactory.getUniqueIds(id)
+	.then( (uniqueId) => {
+		movieFactory.deleteMovie(uniqueId);
+	});
 });
 

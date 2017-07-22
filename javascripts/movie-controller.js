@@ -52,10 +52,16 @@ function addActors (movies, actors) {
 	let castArrays = [];
 	movies.forEach(function(movie, index) {
 		//iteratethrough movies using index
+		// console.log('each actor object?', actors[index]);
 		let tenMovieCasts= actors[index].cast; //get whole casts for all ten movies
 		let shortCasts = tenMovieCasts.slice(0,3);
 		//sliceoff the first 3 cast members for each movie
-		castArrays.push(shortCasts); //add shortCasts to cast arrays
+		// console.log('shortcasts array?', shortCasts);
+		let shortCastsStrings = shortCasts.map((castObj)=>{
+			return castObj.name;
+		});//just get the strings from the objects
+		// console.log('shortCastsStrings ?', shortCastsStrings);
+		castArrays.push(shortCastsStrings); //add shortCasts to cast arrays
 	});
 		console.log("cast arrays", castArrays);
 		//buildMovieObjects with movies and cast arrays

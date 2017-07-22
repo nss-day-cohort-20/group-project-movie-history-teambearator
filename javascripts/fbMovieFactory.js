@@ -37,7 +37,6 @@ fbFactory.addMovie = (movieToBeAdded) => {
 fbFactory.giveMovieRating = (rating, movieId) => {
 	let movRating = {rating};
 	return new Promise( (resolve, reject) => {
-		// let currentUser = firebase.auth().currentUser.uid;
 		$.ajax({
 			url: `${fbURL}/movies/${movieId}.json`,
 			type: "PATCH",
@@ -79,6 +78,7 @@ fbFactory.deleteMovie = (movieId) => {
 	}
 };
 
+// resolves the unique ID for the given movie's ID
 fbFactory.getUniqueIds = (movieId) => {
 	return new Promise( (resolve, reject) => {
 		let currentUser = firebase.auth().currentUser.uid;
@@ -92,9 +92,8 @@ fbFactory.getUniqueIds = (movieId) => {
 				if(data[keys].id == movieId && data[keys].uid == currentUser)
 					resolve(keys);
 			}
-			// console.log("data from getUniqueIds",data);
-			// console.log("ids from getUniqueIds",ids);
 		});
 	});
 };
+
 module.exports = fbFactory;

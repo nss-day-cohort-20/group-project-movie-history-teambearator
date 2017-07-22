@@ -3,40 +3,21 @@
 let $ = require('jquery');
 let movieFactoryAPI = require('./apiMovieFactory.js');
 let movieController = require('./movie-controller.js');
-let userFactory = require('./user-factory.js');
 let movieFactory = require('./fbMovieFactory.js');
 let templateBuilder = require('./template-builder.js');
 //let apiGetter = require('./api-config.js');
 //event listeners
 
-// $(".login-page > div:gt(0)").hide();
+$(".login-page > div:gt(0)").hide();
 
-// setInterval(function() { 
-// $('.login-page > div:first')
-// .fadeOut(0)
-// .next()
-// .fadeIn(1000)
-// .end()
-// .appendTo('.login-page');
-// },  3000);
-
-
-$("#login").click(function() {
-	userFactory.logInGoogle()
-	//wrapped in promises automatically
-	.then((result)=>{
-		let user = result.user.uid;
-		console.log("user", user);
- 		// movieController.loadMoviesToDom();
- 		$('.after-login-page').toggleClass('isHidden');
- 		$('.login-page').toggleClass('isHidden');
-	});
-});
-
-//user can log out by clicking logout button and page refreshes
-$("#logout").click(function(){
-	userFactory.logOutGoogle();
-});
+setInterval(function() { 
+$('.login-page > div:first')
+.fadeOut(0)
+.next()
+.fadeIn(1000)
+.end()
+.appendTo('.login-page');
+},  3000);
 
 //ERROR ERROR ERROR!!!!
 //whether the user hits enter or clicks "submit" they run the search function

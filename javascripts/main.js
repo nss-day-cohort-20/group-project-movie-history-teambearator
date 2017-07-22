@@ -29,6 +29,7 @@ $("#login").click(function() {
 		console.log("user", user);
  		// movieController.loadMoviesToDom();
  		$('.after-login-page').toggleClass('isHidden');
+ 		$('.login-page').toggleClass('isHidden');
 	});
 });
 

@@ -58,8 +58,23 @@ $('#userMessageInput').keyup( function (event) {
 		// $('#userMessageInput').val("");
 	}
 });
-
-
+function buildObj(movieMatch)
+{
+	let movieObj = {};
+	movieObj.id = movieMatch.id;
+	movieObj.title = movieMatch.title;
+	movieObj.actors = [];
+	movieMatch.actors.forEach( (actor) =>
+	{
+		movieObj.actors.push(actor.name);
+	});
+	movieObj.tracked = true;
+	movieObj.rating = 0;
+	movieObj.uid = movieMatch.uid;
+	movieObj.year = movieMatch.release_date.slice(0,4);
+	movieObj.poster_path = movieMatch.poster_path;	
+	return movieObj;
+}
 
 //add watchlist button adds
 $(document).on("click", '.watchlist', function() {
@@ -69,26 +84,15 @@ $(document).on("click", '.watchlist', function() {
 	console.log("selected movies?", movieMatch);
 	for(var i = 0; i < movieMatch.length; i++) {
 		if(movieMatch[i].id == movieId) {
-			let movieObj = {};
-			movieObj.id = movieMatch[i].id;
-			movieObj.title = movieMatch[i].title;
-			movieObj.actors = [];
-			movieMatch[i].actors.forEach( (actor) =>
-			{
-				movieObj.actors.push(actor.name);
-			});
-			movieObj.tracked = true;
-			movieObj.rating = 0;
-			movieObj.uid = movieMatch[i].uid;
-			movieObj.year = movieMatch[i].release_date.slice(0,4);
-			movieObj.poster_path = movieMatch[i].poster_path;
+			let movieObj =  buildObj(movieMatch[i]);
 			movieFactory.addMovie(movieObj);
-			console.log(movieObj);
+			// console.log(movieObj, "movieObj");
 		}
 	}
 });
 
-$('#messageSubmitButton').click ( function () {
-	// movieController.runSearch();
+$(document).on('click', '.delete' ,() => {
+	let movieId = $(this).parent().parent().attr('id');
+	console.log("id-for delete", movieId);
 });
 

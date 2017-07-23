@@ -12,10 +12,15 @@
       {{/each}}
       {{else}} <p class="card-text actors">| No actors listed |</p>
     {{/if}}
-   {{#if uid}}
+  {{#if uid}}
      <button class="btn btn-primary delete" id="delete-{{id}}">Delete</button>
-     {{else}}<button class="btn btn-primary watchlist">Add To Watchlist</button>
-   {{/if}}
+     <div class="rating">
+        <span id="10">&#10032;</span><span id="9">&#10032;</span><span id="8">&#10032;</span><span id="7">&#10032;</span><span id="6">&#10032;</span><span id="5">&#10032;</span><span id="4">&#10032;</span><span id="3">&#10032;</span><span id="2">&#10032;</span><span id="1">&#10032;</span>
+      </div>
+  {{else}}
+     <button class="btn btn-primary watchlist">Add To Watchlist</button>
+  {{/if}}
+
   </div>
 </div>
 

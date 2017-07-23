@@ -113,3 +113,17 @@ $('#favorites').click( function() {
 	});
 });
 
+$(document).on("click", ".rating", function() {
+	console.log(event.target.id, "event.target.id");
+	let starId = event.target.id;
+	for(let i=1; i <= starId; i++)
+	{
+		$(`#${i}`).addClass('ratedStar');
+	}
+	let movieId = $(this).parent().parent().attr('id');
+	console.log("movieId", movieId);
+	movieFactory.getUniqueIds(movieId)
+	.then( function(uniqueId) {
+		movieFactory.giveMovieRating(starId, uniqueId);
+	});
+});

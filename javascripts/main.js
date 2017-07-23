@@ -131,7 +131,7 @@ $('#watched').click( function() {
 	});
 });
 
-$('#favorite').click( function() {
+$('#favorites').click( function() {
 	$('.card').each( function() {
 		$(this).addClass('isHidden');
 		if ( $(this).data('rating') > 8 ) {

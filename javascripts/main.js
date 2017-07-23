@@ -107,7 +107,7 @@ $(document).on('click', '.delete' ,function() {
 $('#untracked').click( function() {
 	$('.card').each( function() {
 		$(this).removeClass('isHidden');
-		if ( $(this).data('rating') ) {
+		if ( $(this).data('rating') >= 0) {
 			$(this).addClass('isHidden');
 		}
 	});

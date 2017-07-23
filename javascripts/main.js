@@ -3,46 +3,15 @@
 let $ = require('jquery');
 let movieFactoryAPI = require('./apiMovieFactory.js');
 let movieController = require('./movie-controller.js');
-let userFactory = require('./user-factory.js');
 let movieFactory = require('./fbMovieFactory.js');
 let templateBuilder = require('./template-builder.js');
+let user = require('./user-factory.js');
 //let apiGetter = require('./api-config.js');
 //event listeners
 
-// $(".login-page > div:gt(0)").hide();
-
-// setInterval(function() {
-// $('.login-page > div:first')
-// .fadeOut(0)
-// .next()
-// .fadeIn(1000)
-// .end()
-// .appendTo('.login-page');
-// },  3000);
-
-
-$("#login").click(function() {
-	userFactory.logInGoogle()
-	//wrapped in promises automatically
-	.then((result)=>{
-		let user = result.user.uid;
-		// console.log("user", user);
-		// movieFactory.getUserMovies()
-		// .then( (userMovies) => {
-			// templateBuilder.printMovieList(userMovies);
-		// });
- 		$('.after-login-page').toggleClass('isHidden');
- 		$('.login-page').toggleClass('isHidden');
-	});
-});
-
-//user can log out by clicking logout button and page refreshes
-$("#logout").click(function(){
-	userFactory.logOutGoogle();
-});
-
 //whether the user hits enter or clicks "submit" they run the search function
 $('#userMessageInput').keyup( function (event) {
+		$("#breadcrumbs").html("");
 	if (event.which == '13' && $('#userMessageInput').val() !== "") {
 		let moviesSearchedFromAPI;
 		movieController.runSearchInAPI()
@@ -91,6 +60,7 @@ $(document).on('click', '.delete' ,function() {
 });
 
 $('#untracked').click( function() {
+	$("#breadcrumbs").html("Untracked");
 	$('.card').each( function() {
 		$(this).removeClass('isHidden');
 		if ( $(this).data('rating') >= 0) {
@@ -100,6 +70,7 @@ $('#untracked').click( function() {
 });
 
 $('#unwatched').click( function() {
+	$("#breadcrumbs").html("Unwatched");
 	$('.card').each( function() {
 		$(this).addClass('isHidden');
 		if ( $(this).data('rating') === 0 ) {
@@ -109,6 +80,7 @@ $('#unwatched').click( function() {
 });
 
 $('#watched').click( function() {
+	$("#breadcrumbs").html("Watched");
 	$('.card').each( function() {
 		$(this).addClass('isHidden');
 		if ( $(this).data('rating') > 0 ) {
@@ -118,6 +90,7 @@ $('#watched').click( function() {
 });
 
 $('#favorites').click( function() {
+	$("#breadcrumbs").html("Favorites");
 	$('.card').each( function() {
 		$(this).addClass('isHidden');
 		if ( $(this).data('rating') > 8 ) {

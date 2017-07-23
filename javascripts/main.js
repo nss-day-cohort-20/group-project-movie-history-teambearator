@@ -9,7 +9,6 @@ let user = require('./user-factory.js');
 //let apiGetter = require('./api-config.js');
 //event listeners
 
-//ERROR ERROR ERROR!!!!
 //whether the user hits enter or clicks "submit" they run the search function
 $('#userMessageInput').keyup( function (event) {
 		$("#breadcrumbs").html("");
@@ -22,29 +21,16 @@ $('#userMessageInput').keyup( function (event) {
 		})
 		.then(function(usersMovies) {
 			let arrayifiedUsersMovies = Object.values(usersMovies);
-			movieController.filterOutUserMovies(arrayifiedUsersMovies, moviesSearchedFromAPI);
+			movieController.addUserInfoAndPrint(arrayifiedUsersMovies, moviesSearchedFromAPI);
 		});
-		// movieController.runSearch()
-		// .then ( (movieObjects) => {
-		// 	console.log("movie objects", movieObjects);
-		// $('#userMessageInput').val("");
 	}
 });
+
 function buildObj(movieMatch)
 {
 	let movieObj = {};
 	movieObj.id = movieMatch.id;
-	movieObj.title = movieMatch.title;
-	movieObj.actors = [];
-	movieMatch.actors.forEach( (actor) =>
-	{
-		movieObj.actors.push(actor.name);
-	});
-	movieObj.tracked = true;
 	movieObj.rating = 0;
-	movieObj.uid = movieMatch.uid;
-	movieObj.year = movieMatch.release_date.slice(0,4);
-	movieObj.poster_path = movieMatch.poster_path;
 	return movieObj;
 }
 

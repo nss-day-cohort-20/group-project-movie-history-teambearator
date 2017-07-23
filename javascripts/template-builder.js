@@ -12,8 +12,4 @@ templateBuilder.printMovieList =(movieArray)=>{
 	//need data to fill in template
 };
 
-
-
-
-
 module.exports= templateBuilder;

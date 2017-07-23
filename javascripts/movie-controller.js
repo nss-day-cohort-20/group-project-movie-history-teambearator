@@ -92,6 +92,10 @@ movieController.addUserInfoAndPrint = (usersMovieArr, apiMovieArr) => {
 			}
 		}
 	});
+	//format date to year only
+	apiMovieArr.forEach((movie, index)=>{
+		apiMovieArr[index].release_date = movie.release_date.slice(0,4);
+	});
 	// console.log('apiMovieArr', apiMovieArr);
 	templateBuilder.printMovieList(apiMovieArr);
 };

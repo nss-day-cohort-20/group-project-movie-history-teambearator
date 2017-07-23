@@ -12,8 +12,10 @@
       {{/each}}
       {{else}} <p class="card-text actors">| No actors listed |</p>
     {{/if}}
-   <button class="btn btn-primary watchlist">Add To Watchlist</button>
-   <button class="btn btn-primary delete" id="delete-{{id}}">Delete</button>
+   {{#if rating}}
+     <button class="btn btn-primary delete" id="delete-{{id}}">Delete</button>
+     {{else}}<button class="btn btn-primary watchlist">Add To Watchlist</button>
+   {{/if}}
    {{!-- TODO: not everything needs delete button --}}
   </div>
 </div>

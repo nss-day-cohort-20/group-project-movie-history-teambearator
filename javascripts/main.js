@@ -29,6 +29,7 @@ $("#login").click(function() {
 		console.log("user", user);
  		// movieController.loadMoviesToDom();
  		$('.after-login-page').toggleClass('isHidden');
+ 		$('.login-page').toggleClass('isHidden');
 	});
 });
 
@@ -45,7 +46,6 @@ $('#userMessageInput').keyup( function (event) {
 		movieController.runSearchInAPI()
 		.then(function(moviesSearched) {
 			moviesSearchedFromAPI = moviesSearched;
-			console.log("movies searched", moviesSearchedFromAPI);
 			return movieFactory.getUserMovies();
 		})
 		.then(function(usersMovies) {
@@ -58,37 +58,46 @@ $('#userMessageInput').keyup( function (event) {
 		// $('#userMessageInput').val("");
 	}
 });
-
-
+function buildObj(movieMatch)
+{
+	let movieObj = {};
+	movieObj.id = movieMatch.id;
+	movieObj.title = movieMatch.title;
+	movieObj.actors = [];
+	movieMatch.actors.forEach( (actor) =>
+	{
+		movieObj.actors.push(actor.name);
+	});
+	movieObj.tracked = true;
+	movieObj.rating = 0;
+	movieObj.uid = movieMatch.uid;
+	movieObj.year = movieMatch.release_date.slice(0,4);
+	movieObj.poster_path = movieMatch.poster_path;	
+	return movieObj;
+}
 
 //add watchlist button adds
 $(document).on("click", '.watchlist', function() {
 	let movieId = $(this).parent().parent().attr('id');
-	console.log("movieId", movieId);
 	let movieMatch = movieController.selectedMovies;
-	console.log("selected movies?", movieMatch);
 	for(var i = 0; i < movieMatch.length; i++) {
 		if(movieMatch[i].id == movieId) {
-			let movieObj = {};
-			movieObj.id = movieMatch[i].id;
-			movieObj.title = movieMatch[i].title;
-			movieObj.actors = [];
-			movieMatch[i].actors.forEach( (actor) =>
-			{
-				movieObj.actors.push(actor.name);
-			});
-			movieObj.tracked = true;
-			movieObj.rating = 0;
-			movieObj.uid = movieMatch[i].uid;
-			movieObj.year = movieMatch[i].release_date.slice(0,4);
-			movieObj.poster_path = movieMatch[i].poster_path;
+			let movieObj =  buildObj(movieMatch[i]);
 			movieFactory.addMovie(movieObj);
-			console.log(movieObj);
+			// console.log(movieObj, "movieObj");
 		}
 	}
 });
 
-$('#messageSubmitButton').click ( function () {
-	// movieController.runSearch();
+//delete button
+$(document).on('click', '.delete' ,function() {
+	// console.log("event.target",event.target);
+	let id = event.target.id.slice(7);
+	console.log("id-delete",id );
+	$(`#${id}`).remove(); //remove from screen
+	movieFactory.getUniqueIds(id)
+	.then( (uniqueId) => {
+		movieFactory.deleteMovie(uniqueId);
+	});
 });
 

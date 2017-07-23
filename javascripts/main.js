@@ -11,7 +11,7 @@ let templateBuilder = require('./template-builder.js');
 
 // $(".login-page > div:gt(0)").hide();
 
-// setInterval(function() { 
+// setInterval(function() {
 // $('.login-page > div:first')
 // .fadeOut(0)
 // .next()
@@ -26,8 +26,11 @@ $("#login").click(function() {
 	//wrapped in promises automatically
 	.then((result)=>{
 		let user = result.user.uid;
-		console.log("user", user);
- 		// movieController.loadMoviesToDom();
+		// console.log("user", user);
+		movieFactory.getUserMovies()
+		.then( (userMovies) => {
+			templateBuilder.printMovieList(userMovies);
+		});
  		$('.after-login-page').toggleClass('isHidden');
  		$('.login-page').toggleClass('isHidden');
 	});
@@ -72,7 +75,7 @@ function buildObj(movieMatch)
 	movieObj.rating = 0;
 	movieObj.uid = movieMatch.uid;
 	movieObj.year = movieMatch.release_date.slice(0,4);
-	movieObj.poster_path = movieMatch.poster_path;	
+	movieObj.poster_path = movieMatch.poster_path;
 	return movieObj;
 }
 
@@ -98,6 +101,42 @@ $(document).on('click', '.delete' ,function() {
 	movieFactory.getUniqueIds(id)
 	.then( (uniqueId) => {
 		movieFactory.deleteMovie(uniqueId);
+	});
+});
+
+$('#untracked').click( function() {
+	$('.card').each( function() {
+		$(this).removeClass('isHidden');
+		if ( $(this).data('rating') >= 0) {
+			$(this).addClass('isHidden');
+		}
+	});
+});
+
+$('#unwatched').click( function() {
+	$('.card').each( function() {
+		$(this).addClass('isHidden');
+		if ( $(this).data('rating') === 0 ) {
+			$(this).removeClass('isHidden');
+		}
+	});
+});
+
+$('#watched').click( function() {
+	$('.card').each( function() {
+		$(this).addClass('isHidden');
+		if ( $(this).data('rating') > 0 ) {
+			$(this).removeClass('isHidden');
+		}
+	});
+});
+
+$('#favorites').click( function() {
+	$('.card').each( function() {
+		$(this).addClass('isHidden');
+		if ( $(this).data('rating') > 8 ) {
+			$(this).removeClass('isHidden');
+		}
 	});
 });
 

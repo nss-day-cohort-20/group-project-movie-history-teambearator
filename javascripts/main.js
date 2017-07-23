@@ -5,20 +5,26 @@ let movieFactoryAPI = require('./apiMovieFactory.js');
 let movieController = require('./movie-controller.js');
 let movieFactory = require('./fbMovieFactory.js');
 let templateBuilder = require('./template-builder.js');
+let user = require('./user-factory.js');
 //let apiGetter = require('./api-config.js');
 //event listeners
 
-$("#poster-div > img:gt(0)").hide();
+// let slideIndex = 0;
+// carousel();
 
-setInterval(function() { 
-$('#poster-div > img:first')
-.fadeOut(0)
-.next()
-.fadeIn(100)
-.end()
-.appendTo('#poster-div');
-},  3000);
-
+// function carousel() {
+// 	console.log("in carousel function");
+//     var div = document.getElementsByClassName('slides');
+//     for (let i = 0; i < div.length; i++) {
+//       div[i].style.display = "none"; 
+//     }
+//     slideIndex++;
+//     if (slideIndex > div.length) {
+//     	slideIndex = 1;
+//     }
+//     div[slideIndex-1].style.display = "block"; 
+//     setTimeout(carousel, 3000); // Change image every 2 seconds
+// }
 //ERROR ERROR ERROR!!!!
 //whether the user hits enter or clicks "submit" they run the search function
 $('#userMessageInput').keyup( function (event) {

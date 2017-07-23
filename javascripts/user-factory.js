@@ -4,7 +4,7 @@ let firebase= require("./fb-config");
 let provider = new firebase.auth.GoogleAuthProvider();
 let $ = require('jquery');
 
-let logInGoogle = () =>{
+let logInGoogle = () => {
 	return firebase.auth().signInWithPopup(provider);
 	//argument of auth provider you're using
 };//results of calling method on firebase object
@@ -20,7 +20,8 @@ let logOutGoogle = ()=>{
 	});
 };
 
-$("#login").click(function() {
+$(document).on('click','#login', function() {
+	console.log("login");
 	logInGoogle()
 	//wrapped in promises automatically
 	.then((result)=>{
@@ -31,7 +32,6 @@ $("#login").click(function() {
  		$('.login-page').toggleClass('isHidden');
 	});
 });
-
 //user can log out by clicking logout button and page refreshes
 $("#logout").click(function(){
 	logOutGoogle();

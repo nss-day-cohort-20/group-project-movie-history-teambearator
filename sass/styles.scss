@@ -144,3 +144,14 @@ body {
 #logout {
 	border-radius: 10px;
 }
+
+#breadcrumbHolder {
+	margin-bottom: 10px;
+    margin-left: 40px;
+    margin-right: 40px;
+    font-size: 2em;
+    box-shadow: 0 0 0 3px #fff, 2px 0px 0 0px #443642, -1px 1px 0 0px #fff, -11px -11px 2px 1px #eee;
+    background-color: #0e0d0d;
+    color: white;
+    padding-left: 5px;
+}

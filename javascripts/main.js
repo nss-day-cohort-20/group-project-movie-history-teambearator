@@ -73,6 +73,7 @@ $(document).on('click', '.delete' ,function() {
 });
 
 $('#untracked').click( function() {
+	$("#breadcrumbs").html("Untracked");
 	$('.card').each( function() {
 		$(this).removeClass('isHidden');
 		if ( $(this).data('rating') >= 0) {
@@ -82,6 +83,7 @@ $('#untracked').click( function() {
 });
 
 $('#unwatched').click( function() {
+	$("#breadcrumbs").html("Unwatched");
 	$('.card').each( function() {
 		$(this).addClass('isHidden');
 		if ( $(this).data('rating') === 0 ) {
@@ -91,6 +93,7 @@ $('#unwatched').click( function() {
 });
 
 $('#watched').click( function() {
+	$("#breadcrumbs").html("Watched");
 	$('.card').each( function() {
 		$(this).addClass('isHidden');
 		if ( $(this).data('rating') > 0 ) {
@@ -100,6 +103,7 @@ $('#watched').click( function() {
 });
 
 $('#favorites').click( function() {
+	$("#breadcrumbs").html("Favorites");
 	$('.card').each( function() {
 		$(this).addClass('isHidden');
 		if ( $(this).data('rating') > 8 ) {

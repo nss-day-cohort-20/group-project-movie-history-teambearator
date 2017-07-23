@@ -9,22 +9,6 @@ let user = require('./user-factory.js');
 //let apiGetter = require('./api-config.js');
 //event listeners
 
-// let slideIndex = 0;
-// carousel();
-
-// function carousel() {
-// 	console.log("in carousel function");
-//     var div = document.getElementsByClassName('slides');
-//     for (let i = 0; i < div.length; i++) {
-//       div[i].style.display = "none"; 
-//     }
-//     slideIndex++;
-//     if (slideIndex > div.length) {
-//     	slideIndex = 1;
-//     }
-//     div[slideIndex-1].style.display = "block"; 
-//     setTimeout(carousel, 3000); // Change image every 2 seconds
-// }
 //ERROR ERROR ERROR!!!!
 //whether the user hits enter or clicks "submit" they run the search function
 $('#userMessageInput').keyup( function (event) {
@@ -59,7 +43,7 @@ function buildObj(movieMatch)
 	movieObj.rating = 0;
 	movieObj.uid = movieMatch.uid;
 	movieObj.year = movieMatch.release_date.slice(0,4);
-	movieObj.poster_path = movieMatch.poster_path;	
+	movieObj.poster_path = movieMatch.poster_path;
 	return movieObj;
 }
 
@@ -85,6 +69,42 @@ $(document).on('click', '.delete' ,function() {
 	movieFactory.getUniqueIds(id)
 	.then( (uniqueId) => {
 		movieFactory.deleteMovie(uniqueId);
+	});
+});
+
+$('#untracked').click( function() {
+	$('.card').each( function() {
+		$(this).removeClass('isHidden');
+		if ( $(this).data('rating') >= 0) {
+			$(this).addClass('isHidden');
+		}
+	});
+});
+
+$('#unwatched').click( function() {
+	$('.card').each( function() {
+		$(this).addClass('isHidden');
+		if ( $(this).data('rating') === 0 ) {
+			$(this).removeClass('isHidden');
+		}
+	});
+});
+
+$('#watched').click( function() {
+	$('.card').each( function() {
+		$(this).addClass('isHidden');
+		if ( $(this).data('rating') > 0 ) {
+			$(this).removeClass('isHidden');
+		}
+	});
+});
+
+$('#favorites').click( function() {
+	$('.card').each( function() {
+		$(this).addClass('isHidden');
+		if ( $(this).data('rating') > 8 ) {
+			$(this).removeClass('isHidden');
+		}
 	});
 });
 

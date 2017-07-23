@@ -1,7 +1,7 @@
 'use strict';
 
 let $ = require('jquery');
-let fbURL = "https://moviehistoryteambearator.firebaseio.com";
+let fbURL = "https://schmoovies-e903e.firebaseio.com";
 let firebase = require('./fb-config');
 let fbFactory = {};
 
@@ -79,4 +79,22 @@ fbFactory.deleteMovie = (movieId) => {
 	}
 };
 
+fbFactory.getUniqueIds = (movieId) => {
+	return new Promise( (resolve, reject) => {
+		let currentUser = firebase.auth().currentUser.uid;
+		$.ajax({
+			url: `${fbURL}/movies.json`,
+			type: 'GET'
+		}). done( (data) =>
+		{
+			for(let keys in data)
+			{
+				if(data[keys].id == movieId && data[keys].uid == currentUser)
+					resolve(keys);
+			}
+			// console.log("data from getUniqueIds",data);
+			// console.log("ids from getUniqueIds",ids);
+		});
+	});
+};
 module.exports = fbFactory;

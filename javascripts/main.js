@@ -26,7 +26,7 @@ $("#login").click(function() {
 	//wrapped in promises automatically
 	.then((result)=>{
 		let user = result.user.uid;
-		console.log("user", user);
+		// console.log("user", user);
 		movieFactory.getUserMovies()
 		.then( (userMovies) => {
 			templateBuilder.printMovieList(userMovies);

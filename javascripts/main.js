@@ -61,17 +61,7 @@ function buildObj(movieMatch)
 {
 	let movieObj = {};
 	movieObj.id = movieMatch.id;
-	movieObj.title = movieMatch.title;
-	movieObj.actors = [];
-	movieMatch.actors.forEach( (actor) =>
-	{
-		movieObj.actors.push(actor.name);
-	});
-	movieObj.tracked = true;
 	movieObj.rating = 0;
-	movieObj.uid = movieMatch.uid;
-	movieObj.year = movieMatch.release_date.slice(0,4);
-	movieObj.poster_path = movieMatch.poster_path;
 	return movieObj;
 }
 

@@ -65,23 +65,14 @@ function buildObj(movieMatch)
 {
 	let movieObj = {};
 	movieObj.id = movieMatch.id;
-	movieObj.title = movieMatch.title;
-	movieObj.actors = [];
-	movieMatch.actors.forEach( (actor) =>
-	{
-		movieObj.actors.push(actor.name);
-	});
-	movieObj.tracked = true;
 	movieObj.rating = 0;
-	movieObj.uid = movieMatch.uid;
-	movieObj.year = movieMatch.release_date.slice(0,4);
-	movieObj.poster_path = movieMatch.poster_path;
 	return movieObj;
 }
 
 //add watchlist button adds
 $(document).on("click", '.watchlist', function() {
 	let movieId = $(this).parent().parent().attr('id');
+	console.log("what is in movieController.selectedMovies", movieController.selectedMovies);
 	let movieMatch = movieController.selectedMovies;
 	for(var i = 0; i < movieMatch.length; i++) {
 		if(movieMatch[i].id == movieId) {

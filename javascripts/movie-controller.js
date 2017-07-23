@@ -84,32 +84,43 @@ function buildMovieObjects (arrayOfMovies, castArrays) {
 
 //filters out usermovie from the api that gets put in the DOM. TODO: make concat'd usersMovies fit search term;
 movieController.filterOutUserMovies = (usersMovieArr, apiMovieArr) => {
-	let userMoviesIds = usersMovieArr.map(function(movie) {
-		return movie.id;
-	});
-	let moviesToFilterOut = apiMovieArr.filter(function(movie) { // user movies same as api search movies
-		for(var i=0;i<userMoviesIds.length; i++) {
-			if(movie.id === userMoviesIds[i]) {
-				return movie;
+	apiMovieArr.forEach( (movie) => {
+		for (var i=0; i < usersMovieArr.length; i++) {
+			if ( movie.id === usersMovieArr[i].id ) {
+				movie.uid = usersMovieArr[i].uid;
+				movie.rating = usersMovieArr[i].rating;
 			}
 		}
 	});
-	let filteredMovies = apiMovieArr.filter(function(movie, index) {
-		for(var i = 0; i<moviesToFilterOut.length;i++) {
-			if(movie.id === moviesToFilterOut[i].id) {
-				apiMovieArr.splice([index], 1);
-			}
-		}
-		return apiMovieArr;
-	});
-	let userInput = $("#userMessageInput").val();
-	// console.log("userInput",userInput );
-	userMoviesSearched(usersMovieArr, userInput)
-	.then(function(searchedUserMovies){
-	// console.log(searchedUserMovies, "searchedUserMovies");
-	let moviesToDisplay = searchedUserMovies.concat(apiMovieArr);
-	templateBuilder.printMovieList(moviesToDisplay);
-	});
+	console.log('apiMovieArr', apiMovieArr);
+
+	// let userMoviesIds = usersMovieArr.map(function(movie) {
+	// 	return movie.id;
+	// });
+
+	// let moviesToFilterOut = apiMovieArr.filter(function(movie) { // user movies same as api search movies
+	// 	for(var i=0;i<userMoviesIds.length; i++) {
+	// 		if(movie.id === userMoviesIds[i]) {
+	// 			return movie;
+	// 		}
+	// 	}
+	// });
+	// let filteredMovies = apiMovieArr.filter(function(movie, index) {
+	// 	for(var i = 0; i<moviesToFilterOut.length;i++) {
+	// 		if(movie.id === moviesToFilterOut[i].id) {
+	// 			apiMovieArr.splice([index], 1);
+	// 		}
+	// 	}
+	// 	return apiMovieArr;
+	// });
+	// let userInput = $("#userMessageInput").val();
+	// // console.log("userInput",userInput );
+	// userMoviesSearched(usersMovieArr, userInput)
+	// .then(function(searchedUserMovies){
+	// // console.log(searchedUserMovies, "searchedUserMovies");
+	// let moviesToDisplay = searchedUserMovies.concat(apiMovieArr);
+	templateBuilder.printMovieList(apiMovieArr);
+	// });
 
 };
 

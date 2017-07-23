@@ -2,7 +2,7 @@
 {{#each this}}
 
 <div class="card col-md-4" id="{{id}}">
-  <img class="card-img-top movieimg" src={{#if poster_path}}"https://image.tmdb.org/t/p/w342/{{poster_path}} {{else}} "http://evineyard.co/wp-content/uploads/2015/08/movie-poster-coming-soon.png{{/if}}" alt="{{title}} Movie Poster">
+  <img class="card-img-top movieimg" src={{#if poster_path}}"https://image.tmdb.org/t/p/w342/{{poster_path}}" {{else}} "http://evineyard.co/wp-content/uploads/2015/08/movie-poster-coming-soon.png"{{/if}} alt="{{title}} Movie Poster">
   <div class="card-block">
     <h4 class="card-title">{{title}}</h4>
     <p class="card-text">{{release_date}}</p>
@@ -13,7 +13,7 @@
     {{else}} <p class="card-text actors">| No actors listed |</p>
     {{/if}}
    <button class="btn btn-primary watchlist">Add To Watchlist</button>
-   <button class="btn btn-primary delete">Delete</button>
+   <button class="btn btn-primary delete" id="delete-{{id}}">Delete</button>
    {{!-- TODO: not everything needs delete button --}}
   </div>
 </div>

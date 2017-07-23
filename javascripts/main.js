@@ -98,6 +98,10 @@ $('#watched').click( function() {
 	$('.card').each( function() {
 		$(this).addClass('isHidden');
 		if ( $(this).data('rating') > 0 ) {
+			let rate = $(this).data('rating');
+			for(let i=1; i<=rate; i++) {
+				$(this).find(`#${i}`).addClass('ratedStar');
+			}
 			$(this).removeClass('isHidden');
 		}
 	});
@@ -108,6 +112,10 @@ $('#favorites').click( function() {
 	$('.card').each( function() {
 		$(this).addClass('isHidden');
 		if ( $(this).data('rating') > 8 ) {
+			let rate = $(this).data('rating');
+			for(let i=1; i<=rate; i++) {
+				$(this).find(`#${i}`).addClass('ratedStar');
+			}
 			$(this).removeClass('isHidden');
 		}
 	});

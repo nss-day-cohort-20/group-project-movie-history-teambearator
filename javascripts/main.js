@@ -12,6 +12,7 @@ let user = require('./user-factory.js');
 //ERROR ERROR ERROR!!!!
 //whether the user hits enter or clicks "submit" they run the search function
 $('#userMessageInput').keyup( function (event) {
+		$("#breadcrumbs").html("");
 	if (event.which == '13' && $('#userMessageInput').val() !== "") {
 		let moviesSearchedFromAPI;
 		movieController.runSearchInAPI()

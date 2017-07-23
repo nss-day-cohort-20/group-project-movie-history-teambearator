@@ -8,15 +8,15 @@ let templateBuilder = require('./template-builder.js');
 //let apiGetter = require('./api-config.js');
 //event listeners
 
-$(".login-page > div:gt(0)").hide();
+$("#poster-div > img:gt(0)").hide();
 
 setInterval(function() { 
-$('.login-page > div:first')
+$('#poster-div > img:first')
 .fadeOut(0)
 .next()
-.fadeIn(1000)
+.fadeIn(100)
 .end()
-.appendTo('.login-page');
+.appendTo('#poster-div');
 },  3000);
 
 //ERROR ERROR ERROR!!!!

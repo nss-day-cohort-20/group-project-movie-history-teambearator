@@ -27,10 +27,10 @@ $("#login").click(function() {
 	.then((result)=>{
 		let user = result.user.uid;
 		// console.log("user", user);
-		movieFactory.getUserMovies()
-		.then( (userMovies) => {
-			templateBuilder.printMovieList(userMovies);
-		});
+		// movieFactory.getUserMovies()
+		// .then( (userMovies) => {
+			// templateBuilder.printMovieList(userMovies);
+		// });
  		$('.after-login-page').toggleClass('isHidden');
  		$('.login-page').toggleClass('isHidden');
 	});
@@ -41,7 +41,6 @@ $("#logout").click(function(){
 	userFactory.logOutGoogle();
 });
 
-//ERROR ERROR ERROR!!!!
 //whether the user hits enter or clicks "submit" they run the search function
 $('#userMessageInput').keyup( function (event) {
 	if (event.which == '13' && $('#userMessageInput').val() !== "") {
@@ -53,14 +52,11 @@ $('#userMessageInput').keyup( function (event) {
 		})
 		.then(function(usersMovies) {
 			let arrayifiedUsersMovies = Object.values(usersMovies);
-			movieController.filterOutUserMovies(arrayifiedUsersMovies, moviesSearchedFromAPI);
+			movieController.addUserInfoAndPrint(arrayifiedUsersMovies, moviesSearchedFromAPI);
 		});
-		// movieController.runSearch()
-		// .then ( (movieObjects) => {
-		// 	console.log("movie objects", movieObjects);
-		// $('#userMessageInput').val("");
 	}
 });
+
 function buildObj(movieMatch)
 {
 	let movieObj = {};

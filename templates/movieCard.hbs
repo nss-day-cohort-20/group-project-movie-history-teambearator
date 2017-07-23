@@ -1,7 +1,7 @@
 
 {{#each this}}
 
-<div  id="{{id}}" class="card col-md-4 {{#if rating}}data-rating-{{rating}}{{/if}}">
+<div  id="{{id}}" class="card col-md-4" {{#if rating}}data-rating={{rating}}{{/if}}>
   <img class="card-img-top movieimg" src={{#if poster_path}}"https://image.tmdb.org/t/p/w342/{{poster_path}}" {{else}} "http://evineyard.co/wp-content/uploads/2015/08/movie-poster-coming-soon.png"{{/if}} alt="{{title}} Movie Poster">
   <div class="card-block">
     <h4 class="card-title">{{title}}</h4>

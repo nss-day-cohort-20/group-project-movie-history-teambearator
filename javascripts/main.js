@@ -104,3 +104,39 @@ $(document).on('click', '.delete' ,function() {
 	});
 });
 
+$('#untracked').click( function() {
+	$('.card').each( function() {
+		$(this).removeClass('isHidden');
+		if ( $(this).data('rating') ) {
+			$(this).addClass('isHidden');
+		}
+	});
+});
+
+$('#unwatched').click( function() {
+	$('.card').each( function() {
+		$(this).addClass('isHidden');
+		if ( $(this).data('rating') === 0 ) {
+			$(this).removeClass('isHidden');
+		}
+	});
+});
+
+$('#watched').click( function() {
+	$('.card').each( function() {
+		$(this).addClass('isHidden');
+		if ( $(this).data('rating') > 0 ) {
+			$(this).removeClass('isHidden');
+		}
+	});
+});
+
+$('#favorite').click( function() {
+	$('.card').each( function() {
+		$(this).addClass('isHidden');
+		if ( $(this).data('rating') > 8 ) {
+			$(this).removeClass('isHidden');
+		}
+	});
+});
+

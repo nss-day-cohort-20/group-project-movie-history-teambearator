@@ -71,21 +71,22 @@ $('#untracked').click( function() {
 	});
 });
 
-
-
-$('#unwatched').click( function() {
-	$("#breadcrumbs").html("Unwatched");
+function showUnwatched() {
 	$('.card').each( function() {
 		$(this).addClass('isHidden');
 		if ( $(this).data('rating') === 0 ) {
 			$(this).removeClass('isHidden');
 		}
 	});
+}
+
+$('#unwatched').click( function() {
+	$("#breadcrumbs").html("Unwatched");
+	showUnwatched();
 });
 
-$('#watched').click( function() {
-	$("#breadcrumbs").html("Watched");
-	$('.card').each( function() {
+function showWatched() {
+		$('.card').each( function() {
 		$(this).addClass('isHidden');
 		if ( $(this).data('rating') > 0 ) {
 			let rate = $(this).data('rating');
@@ -95,10 +96,14 @@ $('#watched').click( function() {
 			$(this).removeClass('isHidden');
 		}
 	});
+}
+
+$('#watched').click( function() {
+	$("#breadcrumbs").html("Watched");
+	showWatched();
 });
 
-$('#favorites').click( function() {
-	$("#breadcrumbs").html("Favorites");
+function showFavorites() {
 	$('.card').each( function() {
 		$(this).addClass('isHidden');
 		if ( $(this).data('rating') > 8 ) {
@@ -109,6 +114,11 @@ $('#favorites').click( function() {
 			$(this).removeClass('isHidden');
 		}
 	});
+}
+
+$('#favorites').click( function() {
+	$("#breadcrumbs").html("Favorites");
+	showFavorites();
 });
 
 $(document).on("click", ".rating", function() {

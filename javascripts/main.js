@@ -28,7 +28,7 @@ $('#userMessageInput').keyup( function (event) {
 			}
 		});
 	}
-	
+
 });
 
 function buildObj(movieMatch)
@@ -51,6 +51,10 @@ $(document).on("click", '.watchlist', function() {
 			// console.log(movieObj, "movieObj");
 		}
 	}
+	let dataRating = $(this).parent().parent().data('rating');
+	let starsElement = templateBuilder.makeStarsDiv(dataRating, movieId);
+	$(this).parent().append(starsElement);
+	$(this).remove();
 });
 
 //delete button

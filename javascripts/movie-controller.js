@@ -82,35 +82,22 @@ function buildMovieObjects (arrayOfMovies, castArrays) {
 	return arrayOfMovies;
 }
 
-//filters out usermovie from the api that gets put in the DOM. TODO: make concat'd usersMovies fit search term;
-movieController.filterOutUserMovies = (usersMovieArr, apiMovieArr) => {
-	let userMoviesIds = usersMovieArr.map(function(movie) {
-		return movie.id;
-	});
-	let moviesToFilterOut = apiMovieArr.filter(function(movie) { // user movies same as api search movies
-		for(var i=0;i<userMoviesIds.length; i++) {
-			if(movie.id === userMoviesIds[i]) {
-				return movie;
+// adds user info to API results before sending on to DOM template;
+movieController.addUserInfoAndPrint = (usersMovieArr, apiMovieArr) => {
+	apiMovieArr.forEach( (movie) => {
+		for (var i=0; i < usersMovieArr.length; i++) {
+			if ( movie.id === usersMovieArr[i].id ) {
+				movie.uid = usersMovieArr[i].uid;
+				movie.rating = usersMovieArr[i].rating;
 			}
 		}
 	});
-	let filteredMovies = apiMovieArr.filter(function(movie, index) {
-		for(var i = 0; i<moviesToFilterOut.length;i++) {
-			if(movie.id === moviesToFilterOut[i].id) {
-				apiMovieArr.splice([index], 1);
-			}
-		}
-		return apiMovieArr;
+	//format date to year only
+	apiMovieArr.forEach((movie, index)=>{
+		apiMovieArr[index].release_date = movie.release_date.slice(0,4);
 	});
-	let userInput = $("#userMessageInput").val();
-	// console.log("userInput",userInput );
-	userMoviesSearched(usersMovieArr, userInput)
-	.then(function(searchedUserMovies){
-	// console.log(searchedUserMovies, "searchedUserMovies");
-	let moviesToDisplay = searchedUserMovies.concat(apiMovieArr);
-	templateBuilder.printMovieList(moviesToDisplay);
-	});
-
+	// console.log('apiMovieArr', apiMovieArr);
+	templateBuilder.printMovieList(apiMovieArr);
 };
 
 function userMoviesSearched(allUserMovies, string) {

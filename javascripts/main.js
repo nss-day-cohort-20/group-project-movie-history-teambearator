@@ -22,8 +22,13 @@ $('#userMessageInput').keyup( function (event) {
 		.then(function(usersMovies) {
 			let arrayifiedUsersMovies = Object.values(usersMovies);
 			movieController.addUserInfoAndPrint(arrayifiedUsersMovies, moviesSearchedFromAPI);
+			if($('#message-creator').children().data('rating'))
+			{
+			console.log($(this));
+			}
 		});
 	}
+	
 });
 
 function buildObj(movieMatch)

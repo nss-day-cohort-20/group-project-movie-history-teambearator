@@ -94,7 +94,7 @@ $('#unwatched').click( function() {
 function showWatched() {
 		$('.card').each( function() {
 		$(this).addClass('isHidden');
-		if ( $(this).data('rating') > "0" ) {
+		if ( parseInt($(this).data('rating')) > 0 ) {
 			let rate = $(this).data('rating');
 			for(let i=1; i<=rate; i++) {
 				$(this).find(`#${i}`).addClass('ratedStar');
@@ -130,12 +130,14 @@ $('#favorites').click( function() {
 $(document).on("click", ".rating", function() {
 	console.log(event.target.id, "event.target.id");
 	let starId = event.target.id;
+	for(let i=1; i<=10; i++)
+		$(`#${i}`).removeClass('ratedStar');
 	for(let i=1; i <= starId; i++)
 	{
 		$(`#${i}`).addClass('ratedStar');
 	}
 	let movieId = $(this).parent().parent().attr('id');
-	$(this).parent().parent().attr('data-rating', starId);
+	$(this).parent().parent().data('rating', starId);
 	console.log("movieId", movieId);
 	movieFactory.getUniqueIds(movieId)
 	.then( function(uniqueId) {

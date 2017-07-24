@@ -104,7 +104,7 @@ function userMoviesSearched(allUserMovies, string) {
 	return new Promise(function(resolve, reject) {
 
 		let newArr = allUserMovies.filter(function(object) {
-			console.log("object.title ?", object);
+			// console.log("object.title ?", object);
 			return object.title.match(new RegExp(string, 'i'));
 		});
 		// console.log("newArr",newArr);

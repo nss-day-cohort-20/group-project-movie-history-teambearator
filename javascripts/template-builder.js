@@ -12,6 +12,7 @@ Handlebars.registerHelper('rating-helper', function(rating, currentStar){
 });
 
 let movieListTemplate = require('../templates/movieCard.hbs');
+let starsAndDeleteTemplate = require('../templates/starsAndDeleteBtn.hbs');
 let starsTemplate = require('../templates/stars.hbs');
 
 let templateBuilder = Object.create(null);
@@ -21,9 +22,13 @@ templateBuilder.printMovieList =(movieArray)=>{
 	$container.html(movieListTemplate(movieArray));
 	//need data to fill in template
 };
+templateBuilder.makeStarsAndDelete = (rating, movieId) => {
+	let starsElement = starsAndDeleteTemplate(rating, movieId);
+	return starsElement;
+};
 
-templateBuilder.makeStarsDiv = (rating, movieId) => {
-	let starsElement = starsTemplate(rating, movieId);
+templateBuilder.makeStarsDiv = (rating) => {
+	let starsElement = starsTemplate(rating);
 	return starsElement;
 };
 

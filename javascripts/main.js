@@ -48,8 +48,8 @@ $(document).on("click", '.watchlist', function() {
 		}
 	}
 	let dataRating = $(this).parent().parent().data('rating');
-	let starsElement = templateBuilder.makeStarsDiv(dataRating, movieId);
-	$(this).parent().append(starsElement);
+	let starsAndDeleteBtnElement = templateBuilder.makeStarsAndDelete(dataRating, movieId);
+	$(this).parent().append(starsAndDeleteBtnElement);
 	$(this).remove();
 });
 

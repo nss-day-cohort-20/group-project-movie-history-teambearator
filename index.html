@@ -7,6 +7,7 @@
 	<link rel="stylesheet" type="text/css" href="css/styles.css">
 </head>
 <body>
+<div class="after-login-page isHidden">
 	<nav class="navbar navbar-default navbar-fixed-top">
 		<div class="container-fluid navColor ">
 			<div class="navbar-header">
@@ -16,45 +17,42 @@
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="#">Bearator
-				</a>
+				<a class="navbar-brand" href="#">Bearator</a>
 			</div>
 			<div class="navbar-form">
 				<div class="form-group" id="submitMessage">
-					<input type="text" id="userMessageInput" class="form-control" placeholder="Search For Movies!">
+					<input type="text" id="userMessageInput" class="form-control" placeholder="Search for new or your Movies!">
 				</div>
 				<div class="btn-group">
 					<button type="button" class="btn btn-default hidden"></button>
 					<button type="button" class="btn btn-default hidden"></button>
 					<button id="messageSubmitButton" type="button" class="btn submitSearch"> Search <span class="glyphicon glyphicon-search"></span></button>
 				</div>
-				<button class="navbar-brand navbar-right login" id = "login">Log In</button>
-				<button class="navbar-brand navbar-right logout isHidden" id = "logout">Log Out</button>
+			<button class="navbar-brand navbar-right logout" id = "logout">Log Out</button>
 			</div>
-			<row>
-			<li class="col-md-4"></li>
-				<li class="radio col-md-9">
-					<label class="radio-inline">
-					<input id="newMovies" name="listFilter" type="radio" checked="checked">Find New Movies</label>
-						<label class="radio-inline">
-							<input id = "yourMovies" name="listFilter" type="radio">Search Your Movies</label>
-						</li>
-					</row>
-				</div>
-			</nav>
-			<div class="ghost">
+		</div>
+	</nav>
+		<div class="ghost"></div>
+		<div id="breadcrumbHolder">Movie History > <span id="breadcrumbs"></span></div>
+		<div class="container messageBox ">
+			<div class="messageHeader row">
+				<button class="col-md-3" id="untracked">Untracked</button>
+				<button class="col-md-3" id="unwatched">Unwatched</button>
+				<button class="col-md-3" id="watched">Watched</button>
+				<button class="col-md-3" id="favorites">Favorites</button>
 			</div>
-			<div class="container messageBox ">
-				<div class="messageHeader row">
+			<div id="message-creator"></div>
+		</div>
+</div>
 
-					<button class="col-md-6" id="unwatched">Unwatched</button>
-					<button class="col-md-6" id="watched">Watched</button>
-
-				</div>
-				<div id="message-creator">
-				</div>
-			</div>
-
-			<script type="text/javascript" src="dist/app.js"></script>
-		</body>
-		</html>
+<div class="login-page">
+<!-- <div id="poster-div">
+	<img class="slides w3-animate-fading" src="images/movie1.jpg">
+	<img class="slides w3-animate-fading" src="images/movie2.jpg">
+	<img class="slides w3-animate-fading" src="images/movie3.jpg">
+</div> -->
+<button class="navbar-brand navbar login" id="login">Log In</button>
+</div>
+<script type="text/javascript" src="dist/app.js"></script>
+</body>
+</html>

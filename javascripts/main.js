@@ -79,7 +79,7 @@ $('#unwatched').click( function() {
 	$("#breadcrumbs").html("Unwatched");
 	$('.card').each( function() {
 		$(this).addClass('isHidden');
-		if ( $(this).data('rating') === 0 ) {
+		if ( $(this).data('rating') == 0 ) {
 			$(this).removeClass('isHidden');
 		}
 	});
@@ -89,7 +89,7 @@ $('#watched').click( function() {
 	$("#breadcrumbs").html("Watched");
 	$('.card').each( function() {
 		$(this).addClass('isHidden');
-		if ( $(this).data('rating') > 0 ) {
+		if ( $(this).data('rating') > "0" ) {
 			let rate = $(this).data('rating');
 			for(let i=1; i<=rate; i++) {
 				$(this).find(`#${i}`).addClass('ratedStar');

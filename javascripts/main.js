@@ -1,13 +1,10 @@
 'use strict';
 
 let $ = require('jquery');
-let movieFactoryAPI = require('./apiMovieFactory.js');
 let movieController = require('./movie-controller.js');
 let movieFactory = require('./fbMovieFactory.js');
 let templateBuilder = require('./template-builder.js');
 let user = require('./user-factory.js');
-//let apiGetter = require('./api-config.js');
-//event listeners
 
 //whether the user hits enter or clicks "submit" they run the search function
 $('#userMessageInput').keyup( function (event) {

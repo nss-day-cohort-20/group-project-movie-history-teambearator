@@ -41,7 +41,7 @@ newSearch.getMovieDetailsWithCast = (movieId) => {
 		$.ajax({
 			url: `https://api.themoviedb.org/3/movie/${movieId}?api_key=${moviedbData.api_key}&append_to_response=credits`
 		}).done( (movieDetailsAndCredits) => {
-			// console.log('movieDetails with Cast', movieDetailsAndCredits);
+			console.log('movieDetails with Cast', movieDetailsAndCredits);
 			resolve(movieDetailsAndCredits);
 		}).fail((err)=>{
 			console.log('error from Details with Cast Search ajax');

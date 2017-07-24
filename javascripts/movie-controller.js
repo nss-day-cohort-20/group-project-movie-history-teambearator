@@ -9,8 +9,7 @@ let movieFactory = require('./fbMovieFactory');
 let templateBuilder = require('./template-builder');
 
 
-	//see which radio button is checked, then launch search based on user input
-
+//
 movieController.runSearchInAPI = () => {
 	let userInput = $("#userMessageInput").val();
 	return new Promise (function (resolve, reject) {
@@ -112,8 +111,44 @@ function userMoviesSearched(allUserMovies, string) {
 	});
 }
 
-function printToDOM(){
+// module.exports.showSavedMovies = () => {
+// 	console.log('showSavedMovies fn');
+// 	fbFactory.getUserMovies()
+// 	.then( (userMovieData) => {
+// 		console.log('userMovieData', userMovieData);
+// 		module.exports.savedFBToMovieCards(userMovieData);
+// 	})
+// 	.catch( (error) => {
+// 		console.log('error', error);
+// 	});
+// };
 
+function buildMovieDetailsAndCastPromises (movieArray) {
+	let movieIdArray = movieArray.map(function (item) {
+		return item.id; //ten movie ids
+	});
+	let detailsWithCastPromiseArr = [];
+	movieIdArray.forEach( (item) => {
+		// let url = `${actorUrl}${item}/credits?api_key=${moviedbData.api_key}`;//this url goes into getCastDetails Movie factory
+		detailsWithCastPromiseArr.push(newSearch.getMovieDetailsWithCast(item));
+		//result of getCastDetails goes into detailsWithCastPromiseArr array -- detailsWithCastPromiseArr is now an array of promises
+	});
+	console.log("movieIdArray", movieIdArray);
+	return detailsWithCastPromiseArr;
 }
+
+movieController.printUserMoviesToDom = function() {
+		movieFactory.getUserMovies()
+		.then( (userMovies) => {
+			// console.log('userMovies', userMovies);
+			let userMovieArr = [];
+			for (var movie in userMovies) {
+				userMovieArr.push(userMovies[movie]);
+			}
+			console.log('userMovieArr', userMovieArr);
+			let promiseArr = buildMovieDetailsAndCastPromises (userMovieArr);
+			console.log('promiseArr', promiseArr);
+		});
+};
 
 module.exports = movieController;

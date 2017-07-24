@@ -30,6 +30,7 @@ $(document).on('click','#login', function() {
  		// movieController.loadMoviesToDom();
  		$('.after-login-page').toggleClass('isHidden');
  		$('.login-page').toggleClass('isHidden');
+ 		$('#userMessageInput').focus();
 	});
 });
 //user can log out by clicking logout button and page refreshes

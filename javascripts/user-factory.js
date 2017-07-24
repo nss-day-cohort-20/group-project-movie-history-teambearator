@@ -22,7 +22,7 @@ let logOutGoogle = ()=>{
 };
 
 $(document).on('click','#login', function() {
-	console.log("login");
+	// console.log("login");
 	logInGoogle()
 	//wrapped in promises automatically
 	.then((result)=>{

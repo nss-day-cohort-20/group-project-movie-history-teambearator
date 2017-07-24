@@ -11,7 +11,7 @@ fbFactory.getUserMovies = () => {
 		$.ajax({
 			url: `${fbURL}/movies.json?orderBy="uid"&equalTo="${currentUser}"`
 		}).done( (movieData) => {
-			// console.log("get user movies", movieData);
+			console.log("get user movies", movieData);
 			resolve(movieData);
 		});
 	});

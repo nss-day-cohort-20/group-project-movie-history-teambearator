@@ -125,15 +125,13 @@ function userMoviesSearched(allUserMovies, string) {
 
 function buildMovieDetailsAndCastPromises (movieArray) {
 	let movieIdArray = movieArray.map(function (item) {
-		return item.id; //ten movie ids
+		return item.id;
 	});
 	let detailsWithCastPromiseArr = [];
 	movieIdArray.forEach( (item) => {
-		// let url = `${actorUrl}${item}/credits?api_key=${moviedbData.api_key}`;//this url goes into getCastDetails Movie factory
 		detailsWithCastPromiseArr.push(newSearch.getMovieDetailsWithCast(item));
-		//result of getCastDetails goes into detailsWithCastPromiseArr array -- detailsWithCastPromiseArr is now an array of promises
 	});
-	console.log("detailsWithCastPromiseArr", detailsWithCastPromiseArr);
+	// console.log("detailsWithCastPromiseArr", detailsWithCastPromiseArr);
 	return detailsWithCastPromiseArr;
 }
 
@@ -145,23 +143,19 @@ movieController.printUserMoviesToDom = function() {
 			for (var movie in userMovies) {
 				userMovieArr.push(userMovies[movie]);
 			}
-			console.log('userMovieArr', userMovieArr);
 			let promiseArr = buildMovieDetailsAndCastPromises(userMovieArr);
-			console.log('promiseArr', promiseArr);
-
+			// console.log('promiseArr', promiseArr);
 			Promise.all(promiseArr)
-			.then( (movieArr) => {
-				// console.log(movieArr);
+			.then( (apiResults) => {
+				// console.log('apiResults from promises', apiResults);
 				userMovieArr.forEach( (movie, index) => {
-					movie.title = movieArr[index].title;
-					console.log('userMovieArr[movie]', userMovieArr[movie]);
+					movie.title = apiResults[index].title;
+					movie.actors = [ apiResults[index].credits.cast[0].name, apiResults[index].credits.cast[1].name, apiResults[index].credits.cast[2].name];
+					movie.poster_path = apiResults[index].poster_path;
+					movie.release_date = apiResults[index].release_date.slice(0,4);
 				});
-
-				// dataFromMovieSearchApi.results.forEach((movie, index) => {
-				// 	dataFromMovieSearchApi.results[index].actors = actorsArrays[index];
-				// });
-				// // console.log('modified search results', dataFromMovieSearchApi);
-				// resolve(dataFromMovieSearchApi);
+				// console.log('userMovieArr', userMovieArr);
+				templateBuilder.printMovieList(userMovieArr);
 			});
 		});
 };

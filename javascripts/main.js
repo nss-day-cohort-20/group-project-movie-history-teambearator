@@ -134,17 +134,21 @@ $('#favorites').click( function() {
 $(document).on("click", ".rating", function() {
 	console.log(event.target.id, "event.target.id");
 	let starId = event.target.id;
-	for(let i=1; i<=10; i++)
-		$(`#${i}`).removeClass('ratedStar');
-	for(let i=1; i <= starId; i++)
-	{
-		$(`#${i}`).addClass('ratedStar');
-	}
 	let movieId = $(this).parent().parent().attr('id');
 	$(this).parent().parent().data('rating', starId);
-	console.log("movieId", movieId);
+	$(this).remove();
 	movieFactory.getUniqueIds(movieId)
 	.then( function(uniqueId) {
 		movieFactory.giveMovieRating(starId, uniqueId);
 	});
+	let newStarsDiv = templateBuilder.makeStarsDiv(starId, movieId);
+	$(`#${movieId}`).find('.card-block').append(newStarsDiv);
 });
+	// $(this).children().forEach( (child) => {
+	// 	child.removeClass('ratedStar');
+	// });
+	// for(let i=1; i <= starId; i++)
+	// {
+	// 	$(`#${i}`).addClass('ratedStar');
+	// }
+	// console.log("movieId", movieId);

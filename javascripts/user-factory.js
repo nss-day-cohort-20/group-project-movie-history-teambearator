@@ -1,8 +1,9 @@
 'use strict';
 
+let $ = require('jquery');
 let firebase= require("./fb-config");
 let provider = new firebase.auth.GoogleAuthProvider();
-let $ = require('jquery');
+let movieController = require('./movie-controller');
 
 let logInGoogle = () => {
 	return firebase.auth().signInWithPopup(provider);
@@ -21,12 +22,13 @@ let logOutGoogle = ()=>{
 };
 
 $(document).on('click','#login', function() {
-	console.log("login");
+	// console.log("login");
 	logInGoogle()
 	//wrapped in promises automatically
 	.then((result)=>{
 		let user = result.user.uid;
 		console.log("user", user);
+		movieController.printUserMoviesToDom();
  		// movieController.loadMoviesToDom();
  		$('.after-login-page').toggleClass('isHidden');
  		$('.login-page').toggleClass('isHidden');

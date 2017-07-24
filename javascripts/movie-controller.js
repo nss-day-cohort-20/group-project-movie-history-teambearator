@@ -9,8 +9,7 @@ let movieFactory = require('./fbMovieFactory');
 let templateBuilder = require('./template-builder');
 
 
-	//see which radio button is checked, then launch search based on user input
-
+//
 movieController.runSearchInAPI = () => {
 	let userInput = $("#userMessageInput").val();
 	return new Promise (function (resolve, reject) {
@@ -112,8 +111,41 @@ function userMoviesSearched(allUserMovies, string) {
 	});
 }
 
-function printToDOM(){
-
+function buildMovieDetailsAndCastPromises (movieArray) {
+	let movieIdArray = movieArray.map(function (item) {
+		return item.id;
+	});
+	let detailsWithCastPromiseArr = [];
+	movieIdArray.forEach( (item) => {
+		detailsWithCastPromiseArr.push(newSearch.getMovieDetailsWithCast(item));
+	});
+	// console.log("detailsWithCastPromiseArr", detailsWithCastPromiseArr);
+	return detailsWithCastPromiseArr;
 }
+
+movieController.printUserMoviesToDom = function() {
+		movieFactory.getUserMovies()
+		.then( (userMovies) => {
+			// console.log('userMovies', userMovies);
+			let userMovieArr = [];
+			for (var movie in userMovies) {
+				userMovieArr.push(userMovies[movie]);
+			}
+			let promiseArr = buildMovieDetailsAndCastPromises(userMovieArr);
+			// console.log('promiseArr', promiseArr);
+			Promise.all(promiseArr)
+			.then( (apiResults) => {
+				// console.log('apiResults from promises', apiResults);
+				userMovieArr.forEach( (movie, index) => {
+					movie.title = apiResults[index].title;
+					movie.actors = [ apiResults[index].credits.cast[0].name, apiResults[index].credits.cast[1].name, apiResults[index].credits.cast[2].name];
+					movie.poster_path = apiResults[index].poster_path;
+					movie.release_date = apiResults[index].release_date.slice(0,4);
+				});
+				// console.log('userMovieArr', userMovieArr);
+				templateBuilder.printMovieList(userMovieArr);
+			});
+		});
+};
 
 module.exports = movieController;

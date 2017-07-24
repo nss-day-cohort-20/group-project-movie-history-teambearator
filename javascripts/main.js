@@ -159,7 +159,7 @@ $(document).on("click", ".rating", function() {
 		movieFactory.giveMovieRating(starId, uniqueId);
 	});
 	// let newRating = $(this).parent().parent().data('rating');
-	let newStarsDiv = templateBuilder.makeStarsDiv(starId);
+	let newStarsDiv = templateBuilder.makeStarsDiv({rating:starId});
 	$(`#${movieId}`).find('.card-block').append(newStarsDiv);
 
 });

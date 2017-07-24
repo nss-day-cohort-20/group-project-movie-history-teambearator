@@ -59,16 +59,18 @@ $(document).on('click', '.delete' ,function() {
 	});
 });
 
-
-
-$('#untracked').click( function() {
-	$("#breadcrumbs").html("Untracked");
+function showUntracked() {
 	$('.card').each( function() {
 		$(this).removeClass('isHidden');
 		if ( $(this).data('rating') >= 0) {
 			$(this).addClass('isHidden');
 		}
 	});
+}
+
+$('#untracked').click( function() {
+	$("#breadcrumbs").html("Untracked");
+	showUntracked();
 });
 
 function showUnwatched() {

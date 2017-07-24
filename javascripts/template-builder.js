@@ -4,6 +4,8 @@ let $ = require('jquery');
 let Handlebars = require('hbsfy/runtime');
 
 Handlebars.registerHelper('rating-helper', function(rating, currentStar){
+	console.log("rating",rating );
+	// console.log("currentStar",currentStar );
 	if (rating >= currentStar) {
 		return 'ratedStar';
 	} else {
@@ -28,6 +30,7 @@ templateBuilder.makeStarsAndDelete = (rating, movieId) => {
 };
 
 templateBuilder.makeStarsDiv = (rating) => {
+	console.log('rating in makeStarsDiv', rating);
 	let starsElement = starsTemplate(rating);
 	return starsElement;
 };

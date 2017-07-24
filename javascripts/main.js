@@ -99,7 +99,7 @@ $('#untracked').click( function() {
 function showUnwatched() {
 	$('.card').each( function() {
 		$(this).addClass('isHidden');
-		if ( $(this).data('rating') === 0 ) {
+		if ( $(this).data('rating') == 0 ) {
 			$(this).removeClass('isHidden');
 		}
 	});
@@ -113,7 +113,7 @@ $('#unwatched').click( function() {
 function showWatched() {
 		$('.card').each( function() {
 		$(this).addClass('isHidden');
-		if ( $(this).data('rating') > 0 ) {
+		if ( parseInt($(this).data('rating')) > 0 ) {
 			let rate = $(this).data('rating');
 			for(let i=1; i<=rate; i++) {
 				$(this).find(`#${i}`).addClass('ratedStar');
@@ -145,3 +145,22 @@ $('#favorites').click( function() {
 	$("#breadcrumbs").html("Favorites");
 	showFavorites();
 });
+
+$(document).on("click", ".rating", function() {
+	console.log(event.target.id, "event.target.id");
+	let starId = event.target.id;
+	let movieId = $(this).parent().parent().attr('id');
+	// $(this).parent().parent().data('rating', starId);
+	$(this).parent().parent().attr('data-rating', starId);
+
+	$(this).remove();
+	movieFactory.getUniqueIds(movieId)
+	.then( function(uniqueId) {
+		movieFactory.giveMovieRating(starId, uniqueId);
+	});
+	// let newRating = $(this).parent().parent().data('rating');
+	let newStarsDiv = templateBuilder.makeStarsDiv({rating:starId});
+	$(`#${movieId}`).find('.card-block').append(newStarsDiv);
+
+});
+

@@ -1,5 +1,5 @@
 'use strict';
-
+// get all stuff from api
 console.log("It's connected");
 
 let $ = require('jquery');

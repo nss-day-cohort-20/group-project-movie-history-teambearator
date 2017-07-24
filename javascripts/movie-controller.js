@@ -13,7 +13,6 @@ let templateBuilder = require('./template-builder');
 
 movieController.runSearchInAPI = () => {
 	let userInput = $("#userMessageInput").val();
-	console.log(userInput);
 	return new Promise (function (resolve, reject) {
 		newSearch.getMovies(userInput)
 		.then ( function (data) {
@@ -53,12 +52,18 @@ function addActors (movies, actors) {
 	let castArrays = [];
 	movies.forEach(function(movie, index) {
 		//iteratethrough movies using index
+		// console.log('each actor object?', actors[index]);
 		let tenMovieCasts= actors[index].cast; //get whole casts for all ten movies
 		let shortCasts = tenMovieCasts.slice(0,3);
 		//sliceoff the first 3 cast members for each movie
-		castArrays.push(shortCasts); //add shortCasts to cast arrays
+		// console.log('shortcasts array?', shortCasts);
+		let shortCastsStrings = shortCasts.map((castObj)=>{
+			return castObj.name;
+		});//just get the strings from the objects
+		// console.log('shortCastsStrings ?', shortCastsStrings);
+		castArrays.push(shortCastsStrings); //add shortCasts to cast arrays
 	});
-		console.log("cast arrays", castArrays);
+		// console.log("cast arrays", castArrays);
 		//buildMovieObjects with movies and cast arrays
 		return buildMovieObjects(movies, castArrays);
 }
@@ -69,7 +74,7 @@ function buildMovieObjects (arrayOfMovies, castArrays) {
 	for (let i=0; i<arrayOfMovies.length; i++) {
 		arrayOfMovies[i].actors = castArrays[i];
 	}//for each movie, give the shortcast,and make it a property on the object called actors
-	console.log("movie objects", arrayOfMovies);
+	// console.log("movie objects", arrayOfMovies);
 	let movieArrayThing = arrayOfMovies;
 	movieController.selectedMovies = movieArrayThing;
 				// return array of movie objects with new property on each object, so we can fill templates
@@ -77,42 +82,32 @@ function buildMovieObjects (arrayOfMovies, castArrays) {
 	return arrayOfMovies;
 }
 
-//filters out usermovie from the api that gets put in the DOM. TODO: make concat'd usersMovies fit search term;
-movieController.filterOutUserMovies = (usersMovieArr, apiMovieArr) => {
-	let userMoviesIds = usersMovieArr.map(function(movie) {
-		return movie.id;
-	});
-	let moviesToFilterOut = apiMovieArr.filter(function(movie) {
-		for(var i=0;i<userMoviesIds.length; i++) {
-			if(movie.id === userMoviesIds[i]) {
-				return movie;
+// adds user info to API results before sending on to DOM template;
+movieController.addUserInfoAndPrint = (usersMovieArr, apiMovieArr) => {
+	apiMovieArr.forEach( (movie) => {
+		for (var i=0; i < usersMovieArr.length; i++) {
+			if ( movie.id === usersMovieArr[i].id ) {
+				movie.uid = usersMovieArr[i].uid;
+				movie.rating = usersMovieArr[i].rating;
 			}
 		}
 	});
-	let filteredMovies = apiMovieArr.filter(function(movie, index) {
-		for(var i = 0; i<moviesToFilterOut.length;i++) {
-			if(movie.id === moviesToFilterOut[i].id) {
-				apiMovieArr.splice([index], 1);
-			}
-		}
-		return apiMovieArr;
+	//format date to year only
+	apiMovieArr.forEach((movie, index)=>{
+		apiMovieArr[index].release_date = movie.release_date.slice(0,4);
 	});
-	let userInput = $("#userMessageInput").val();
-	let userMoviesByString = userMoviesSearched(usersMovieArr, userInput)
-	.then(function(searchedUserMovies){
-
-	});
-	let moviesToDisplay = userMoviesByString.concat(apiMovieArr);
-	console.log("movies to display", moviesToDisplay);
-
-	templateBuilder.printMovieList(moviesToDisplay);
+	// console.log('apiMovieArr', apiMovieArr);
+	templateBuilder.printMovieList(apiMovieArr);
 };
 
 function userMoviesSearched(allUserMovies, string) {
 	return new Promise(function(resolve, reject) {
+
 		let newArr = allUserMovies.filter(function(object) {
-			return object.name.match(new RegExp(string, "i"));
+			// console.log("object.title",object.title );
+			return object.title.match(new RegExp(string, 'i'));
 		});
+		// console.log("newArr",newArr);
 		resolve(newArr);
 	});
 }

@@ -141,9 +141,19 @@ movieController.printUserMoviesToDom = function() {
 				// console.log('apiResults from promises', apiResults);
 				userMovieArr.forEach( (movie, index) => {
 					movie.title = apiResults[index].title;
-					movie.actors = [ apiResults[index].credits.cast[0].name, apiResults[index].credits.cast[1].name, apiResults[index].credits.cast[2].name];
 					movie.poster_path = apiResults[index].poster_path;
 					movie.release_date = apiResults[index].release_date.slice(0,4);
+					movie.actors = [];
+					//must check if each cast slot exists in result before adding to movie, or promise will fail
+					if ( apiResults[index].credits.cast[0].name ) {
+						movie.actors[0] = apiResults[index].credits.cast[0].name;
+					}
+					if ( apiResults[index].credits.cast[1].name ) {
+						movie.actors[1] = apiResults[index].credits.cast[1].name;
+					}
+					if ( apiResults[index].credits.cast[2].name ) {
+						movie.actors[2] = apiResults[index].credits.cast[2].name;
+					}
 				});
 				// console.log('userMovieArr', userMovieArr);
 				templateBuilder.printMovieList(userMovieArr);

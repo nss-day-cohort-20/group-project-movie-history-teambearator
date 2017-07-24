@@ -8,12 +8,16 @@ let user = require('./user-factory.js');
 
 //search is run on input enter keypress
 $('#userMessageInput').keyup( function (event) {
-	$("#breadcrumbs").html("");
+	//check for empty value on enter press
 	if (event.which == '13' && $('#userMessageInput').val() !== "") {
+		//empty breadcrumb area
+		$("#breadcrumbs").html("");
+		//run search API promise, store results
 		let moviesSearchedFromAPI;
 		movieController.runSearchInAPI()
 		.then(function(moviesSearched) {
 			moviesSearchedFromAPI = moviesSearched;
+			//get FB user movies
 			return movieFactory.getUserMovies();
 		})
 		.then(function(usersMovies) {
@@ -25,7 +29,7 @@ $('#userMessageInput').keyup( function (event) {
 			}
 		});
 	}
-	
+
 });
 
 function buildObj(movieMatch)
@@ -133,7 +137,7 @@ $(document).on("click", ".rating", function() {
 		$(`#${i}`).addClass('ratedStar');
 	}
 	let movieId = $(this).parent().parent().attr('id');
-	$(this).parent().parent().attr('data-rating', starId);
+	$(this).parent().parent().data('rating', starId);
 	console.log("movieId", movieId);
 	movieFactory.getUniqueIds(movieId)
 	.then( function(uniqueId) {

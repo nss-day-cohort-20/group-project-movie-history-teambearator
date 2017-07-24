@@ -8,23 +8,22 @@ let moviedbData = require("./api-getter")();
 let movieFactory = require('./fbMovieFactory');
 let templateBuilder = require('./template-builder');
 
-
 // search based on keyword/s entered by user
 movieController.runSearchInAPI = () => {
 	let userInput = $("#userMessageInput").val();
 	return new Promise (function (resolve, reject) {
 		newSearch.getMovies(userInput)
 		.then ( function (data) {
-			//limit to ten movies if requests get cut off
-			let tenNewMovies = data.results;
-			// .slice(0, 10);//slice off first 10 results
+			let apiMovieResults = data.results;
+			//limit to ten movies if requests get cut off - replace apiMovieResults
+			// let tenNewMovies = data.results.slice(0, 10);//slice off first 10 results
 			// console.log("ten movies", tenNewMovies);
 			// let castPromisesArray = buildCastPromises(tenNewMovies);//go through movies,grab id, get actor info
-			let castPromisesArray = buildCastPromises(tenNewMovies);//go through movies,grab id, get actor info
+			let castPromisesArray = buildCastPromises(apiMovieResults);//go through movies,grab id, get actor info
 			Promise.all(castPromisesArray) //array of promises --data below is castPromises resolved, which isthe actor list for each movie
 			.then(function(data) {
 				console.log("object of objects with arrays of cast members", data);
-				resolve(addActors(tenNewMovies, data));
+				resolve(addActors(apiMovieResults, data));
 				//resolve(variable for the next function in the promise string) the result of addActors
 			});
 		});

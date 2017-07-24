@@ -22,28 +22,23 @@ $('#userMessageInput').keyup( function (event) {
 		})
 		.then(function(usersMovies) {
 			let arrayifiedUsersMovies = Object.values(usersMovies);
+			//send to arrays to movie controller
 			movieController.addUserInfoAndPrint(arrayifiedUsersMovies, moviesSearchedFromAPI);
-			if($('#message-creator').children().data('rating'))
-			{
-			console.log($(this));
-			}
 		});
 	}
-
 });
 
-function buildObj(movieMatch)
-{
+function buildObj(movieMatch) {
 	let movieObj = {};
 	movieObj.id = movieMatch.id;
 	movieObj.rating = 0;
 	return movieObj;
 }
 
-//add watchlist button adds
+//add watchlist button sends to FB, updates rating custom data attr
 $(document).on("click", '.watchlist', function() {
 	let movieId = $(this).parent().parent().attr('id');
-	$(this).parent().parent().attr('data-rating', 0);
+	$(this).parent().parent().data('rating', 0);
 	let movieMatch = movieController.selectedMovies;
 	for(var i = 0; i < movieMatch.length; i++) {
 		if(movieMatch[i].id == movieId) {
@@ -66,6 +61,23 @@ $(document).on('click', '.delete' ,function() {
 	});
 });
 
+//rating listener
+$(document).on("click", ".rating", function() {
+	console.log(event.target.id, "event.target.id");
+	let starId = event.target.id;
+	for(let i=1; i <= starId; i++) {
+		$(`#${i}`).addClass('ratedStar');
+	}
+	let movieId = $(this).parent().parent().attr('id');
+	$(this).parent().parent().data('rating', starId);
+	console.log("movieId", movieId);
+	movieFactory.getUniqueIds(movieId)
+	.then( function(uniqueId) {
+		movieFactory.giveMovieRating(starId, uniqueId);
+	});
+});
+
+//FILTER LISTENERS
 function showUntracked() {
 	$('.card').each( function() {
 		$(this).removeClass('isHidden');
@@ -128,19 +140,4 @@ function showFavorites() {
 $('#favorites').click( function() {
 	$("#breadcrumbs").html("Favorites");
 	showFavorites();
-});
-
-$(document).on("click", ".rating", function() {
-	console.log(event.target.id, "event.target.id");
-	let starId = event.target.id;
-	for(let i=1; i <= starId; i++) {
-		$(`#${i}`).addClass('ratedStar');
-	}
-	let movieId = $(this).parent().parent().attr('id');
-	$(this).parent().parent().data('rating', starId);
-	console.log("movieId", movieId);
-	movieFactory.getUniqueIds(movieId)
-	.then( function(uniqueId) {
-		movieFactory.giveMovieRating(starId, uniqueId);
-	});
 });

@@ -46,39 +46,33 @@ function buildCastPromises (movieArray) {
 	return castPromises;
 }
 
-
-
 function addActors (movies, actors) {
 	//pass in data from resolved promise.all
 	let castArrays = [];
+	//iteratethrough movies using index
 	movies.forEach(function(movie, index) {
-		//iteratethrough movies using index
-		// console.log('each actor object?', actors[index]);
 		let tenMovieCasts= actors[index].cast; //get whole casts for all ten movies
-		let shortCasts = tenMovieCasts.slice(0,3);
 		//sliceoff the first 3 cast members for each movie
-		// console.log('shortcasts array?', shortCasts);
+		let shortCasts = tenMovieCasts.slice(0,3);
 		let shortCastsStrings = shortCasts.map((castObj)=>{
 			return castObj.name;
 		});//just get the strings from the objects
-		// console.log('shortCastsStrings ?', shortCastsStrings);
 		castArrays.push(shortCastsStrings); //add shortCasts to cast arrays
 	});
-		// console.log("cast arrays", castArrays);
-		//buildMovieObjects with movies and cast arrays
-		return buildMovieObjects(movies, castArrays);
+	//buildMovieObjects with movies and cast arrays
+	return buildMovieObjects(movies, castArrays);
 }
 
 //build the object that gets templateified -- need the actors
 function buildMovieObjects (arrayOfMovies, castArrays) {
-	console.log("array of movies", arrayOfMovies);
+	// console.log("array of movies", arrayOfMovies);
 	for (let i=0; i<arrayOfMovies.length; i++) {
 		arrayOfMovies[i].actors = castArrays[i];
 	}//for each movie, give the shortcast,and make it a property on the object called actors
-	// console.log("movie objects", arrayOfMovies);
 	let movieArrayThing = arrayOfMovies;
+	//store movieArrayThing as exportable from module - available until next search
 	movieController.selectedMovies = movieArrayThing;
-				// return array of movie objects with new property on each object, so we can fill templates
+	// return array of movie objects with new property on each object, so we can fill templates
 	// templateBuilder.printMovieList(arrayOfMovies);
 	return arrayOfMovies;
 }
@@ -98,22 +92,21 @@ movieController.addUserInfoAndPrint = (usersMovieArr, apiMovieArr) => {
 		apiMovieArr[index].release_date = movie.release_date.slice(0,4);
 	});
 	// console.log('apiMovieArr', apiMovieArr);
+	//send complete info to template
 	templateBuilder.printMovieList(apiMovieArr);
 };
 
 function userMoviesSearched(allUserMovies, string) {
 	return new Promise(function(resolve, reject) {
-
 		let newArr = allUserMovies.filter(function(object) {
-			// console.log("object.title ?", object);
+			//match user movies to search keywords (string)
 			return object.title.match(new RegExp(string, 'i'));
 		});
-		// console.log("newArr",newArr);
 		resolve(newArr);
 	});
 }
 
-//helper for printUserMoviesToDom
+//helper for printUserMoviesToDom - grabs all movie info, including cast
 function buildMovieDetailsAndCastPromises (movieArray) {
 	let movieIdArray = movieArray.map(function (item) {
 		return item.id;
@@ -129,38 +122,39 @@ function buildMovieDetailsAndCastPromises (movieArray) {
 
 //runs on login to show all user movies
 movieController.printUserMoviesToDom = function() {
-		movieFactory.getUserMovies()
-		.then( (userMovies) => {
-			// console.log('userMovies', userMovies);
-			let userMovieArr = [];
-			for (var movie in userMovies) {
-				userMovieArr.push(userMovies[movie]);
-			}
-			let promiseArr = buildMovieDetailsAndCastPromises(userMovieArr);
-			// console.log('promiseArr', promiseArr);
-			Promise.all(promiseArr)
-			.then( (apiResults) => {
-				// console.log('apiResults from promises', apiResults);
-				userMovieArr.forEach( (movie, index) => {
-					movie.title = apiResults[index].title;
-					movie.poster_path = apiResults[index].poster_path;
-					movie.release_date = apiResults[index].release_date.slice(0,4);
-					movie.actors = [];
-					//must check if each cast slot exists in result before adding to movie, or promise will fail
-					if ( apiResults[index].credits.cast[0].name ) {
-						movie.actors[0] = apiResults[index].credits.cast[0].name;
-					}
-					if ( apiResults[index].credits.cast[1].name ) {
-						movie.actors[1] = apiResults[index].credits.cast[1].name;
-					}
-					if ( apiResults[index].credits.cast[2].name ) {
-						movie.actors[2] = apiResults[index].credits.cast[2].name;
-					}
-				});
-				// console.log('userMovieArr', userMovieArr);
-				templateBuilder.printMovieList(userMovieArr);
+	//grab user's movies from FB
+	movieFactory.getUserMovies()
+	.then( (userMovies) => {
+		//push to array for later use
+		let userMovieArr = [];
+		for (var movie in userMovies) {
+			userMovieArr.push(userMovies[movie]);
+		}
+		// pass array to function that creates promise to grab movie info from API
+		let promiseArr = buildMovieDetailsAndCastPromises(userMovieArr);
+		Promise.all(promiseArr)
+		.then( (apiResults) => {
+			//add relevant api results to each user movie
+			userMovieArr.forEach( (movie, index) => {
+				movie.title = apiResults[index].title;
+				movie.poster_path = apiResults[index].poster_path;
+				movie.release_date = apiResults[index].release_date.slice(0,4);
+				movie.actors = [];
+				//must check if each cast slot exists in result before adding to movie, or promise will fail
+				if ( apiResults[index].credits.cast[0].name ) {
+					movie.actors[0] = apiResults[index].credits.cast[0].name;
+				}
+				if ( apiResults[index].credits.cast[1].name ) {
+					movie.actors[1] = apiResults[index].credits.cast[1].name;
+				}
+				if ( apiResults[index].credits.cast[2].name ) {
+					movie.actors[2] = apiResults[index].credits.cast[2].name;
+				}
 			});
+			// send movies, now with all info, to DOM template
+			templateBuilder.printMovieList(userMovieArr);
 		});
+	});
 };
 
 module.exports = movieController;

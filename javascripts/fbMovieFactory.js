@@ -5,6 +5,7 @@ let fbURL = "https://schmoovies-e903e.firebaseio.com";
 let firebase = require('./fb-config');
 let fbFactory = {};
 
+//get all movies from current user
 fbFactory.getUserMovies = () => {
 	return new Promise( (resolve, reject) => {
 		let currentUser = firebase.auth().currentUser.uid;

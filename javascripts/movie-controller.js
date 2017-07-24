@@ -111,18 +111,6 @@ function userMoviesSearched(allUserMovies, string) {
 	});
 }
 
-// module.exports.showSavedMovies = () => {
-// 	console.log('showSavedMovies fn');
-// 	fbFactory.getUserMovies()
-// 	.then( (userMovieData) => {
-// 		console.log('userMovieData', userMovieData);
-// 		module.exports.savedFBToMovieCards(userMovieData);
-// 	})
-// 	.catch( (error) => {
-// 		console.log('error', error);
-// 	});
-// };
-
 function buildMovieDetailsAndCastPromises (movieArray) {
 	let movieIdArray = movieArray.map(function (item) {
 		return item.id;

@@ -8,20 +8,22 @@ let moviedbData = require("./api-getter")();
 let movieFactory = require('./fbMovieFactory');
 let templateBuilder = require('./template-builder');
 
-
-//
+// search based on keyword/s entered by user
 movieController.runSearchInAPI = () => {
 	let userInput = $("#userMessageInput").val();
 	return new Promise (function (resolve, reject) {
 		newSearch.getMovies(userInput)
 		.then ( function (data) {
-			let tenNewMovies = data.results.slice(0, 10);//slice off first 10 results
-			console.log("ten movies", tenNewMovies);
-			let castPromisesArray = buildCastPromises(tenNewMovies);//go through movies,grab id, get actor info
+			let apiMovieResults = data.results;
+			//limit to ten movies if requests get cut off - replace apiMovieResults
+			// let tenNewMovies = data.results.slice(0, 10);//slice off first 10 results
+			// console.log("ten movies", tenNewMovies);
+			// let castPromisesArray = buildCastPromises(tenNewMovies);//go through movies,grab id, get actor info
+			let castPromisesArray = buildCastPromises(apiMovieResults);//go through movies,grab id, get actor info
 			Promise.all(castPromisesArray) //array of promises --data below is castPromises resolved, which isthe actor list for each movie
 			.then(function(data) {
 				console.log("object of objects with arrays of cast members", data);
-				resolve(addActors(tenNewMovies, data));
+				resolve(addActors(apiMovieResults, data));
 				//resolve(variable for the next function in the promise string) the result of addActors
 			});
 		});
@@ -141,9 +143,19 @@ movieController.printUserMoviesToDom = function() {
 				// console.log('apiResults from promises', apiResults);
 				userMovieArr.forEach( (movie, index) => {
 					movie.title = apiResults[index].title;
-					movie.actors = [ apiResults[index].credits.cast[0].name, apiResults[index].credits.cast[1].name, apiResults[index].credits.cast[2].name];
 					movie.poster_path = apiResults[index].poster_path;
 					movie.release_date = apiResults[index].release_date.slice(0,4);
+					movie.actors = [];
+					//must check if each cast slot exists in result before adding to movie, or promise will fail
+					if ( apiResults[index].credits.cast[0].name ) {
+						movie.actors[0] = apiResults[index].credits.cast[0].name;
+					}
+					if ( apiResults[index].credits.cast[1].name ) {
+						movie.actors[1] = apiResults[index].credits.cast[1].name;
+					}
+					if ( apiResults[index].credits.cast[2].name ) {
+						movie.actors[2] = apiResults[index].credits.cast[2].name;
+					}
 				});
 				// console.log('userMovieArr', userMovieArr);
 				templateBuilder.printMovieList(userMovieArr);

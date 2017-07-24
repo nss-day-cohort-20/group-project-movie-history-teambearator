@@ -1,48 +1,44 @@
 'use strict';
 
 let $ = require('jquery');
-let movieFactoryAPI = require('./apiMovieFactory.js');
 let movieController = require('./movie-controller.js');
 let movieFactory = require('./fbMovieFactory.js');
 let templateBuilder = require('./template-builder.js');
 let user = require('./user-factory.js');
-//let apiGetter = require('./api-config.js');
-//event listeners
 
-//whether the user hits enter or clicks "submit" they run the search function
+//search is run on input enter keypress
 $('#userMessageInput').keyup( function (event) {
-	$("#breadcrumbs").html("");
+	//check for empty value on enter press
 	if (event.which == '13' && $('#userMessageInput').val() !== "") {
+		//empty breadcrumb area
+		$("#breadcrumbs").html("");
+		//run search API promise, store results
 		let moviesSearchedFromAPI;
 		movieController.runSearchInAPI()
 		.then(function(moviesSearched) {
 			moviesSearchedFromAPI = moviesSearched;
+			//get FB user movies
 			return movieFactory.getUserMovies();
 		})
 		.then(function(usersMovies) {
 			let arrayifiedUsersMovies = Object.values(usersMovies);
+			//send to arrays to movie controller
 			movieController.addUserInfoAndPrint(arrayifiedUsersMovies, moviesSearchedFromAPI);
-			if($('#message-creator').children().data('rating'))
-			{
-			console.log($(this));
-			}
 		});
 	}
-
 });
 
-function buildObj(movieMatch)
-{
+function buildObj(movieMatch) {
 	let movieObj = {};
 	movieObj.id = movieMatch.id;
 	movieObj.rating = 0;
 	return movieObj;
 }
 
-//add watchlist button adds
+//add watchlist button sends to FB, updates rating custom data attr
 $(document).on("click", '.watchlist', function() {
 	let movieId = $(this).parent().parent().attr('id');
-	$(this).parent().parent().attr('data-rating', 0);
+	$(this).parent().parent().data('rating', 0);
 	let movieMatch = movieController.selectedMovies;
 	for(var i = 0; i < movieMatch.length; i++) {
 		if(movieMatch[i].id == movieId) {
@@ -52,8 +48,8 @@ $(document).on("click", '.watchlist', function() {
 		}
 	}
 	let dataRating = $(this).parent().parent().data('rating');
-	let starsElement = templateBuilder.makeStarsDiv(dataRating, movieId);
-	$(this).parent().append(starsElement);
+	let starsAndDeleteBtnElement = templateBuilder.makeStarsAndDelete(dataRating, movieId);
+	$(this).parent().append(starsAndDeleteBtnElement);
 	$(this).remove();
 });
 
@@ -69,16 +65,35 @@ $(document).on('click', '.delete' ,function() {
 	});
 });
 
+//rating listener
+$(document).on("click", ".rating", function() {
+	console.log(event.target.id, "event.target.id");
+	let starId = event.target.id;
+	for(let i=1; i <= starId; i++) {
+		$(`#${i}`).addClass('ratedStar');
+	}
+	let movieId = $(this).parent().parent().attr('id');
+	$(this).parent().parent().data('rating', starId);
+	console.log("movieId", movieId);
+	movieFactory.getUniqueIds(movieId)
+	.then( function(uniqueId) {
+		movieFactory.giveMovieRating(starId, uniqueId);
+	});
+});
 
-
-$('#untracked').click( function() {
-	$("#breadcrumbs").html("Untracked");
+//FILTER LISTENERS
+function showUntracked() {
 	$('.card').each( function() {
 		$(this).removeClass('isHidden');
 		if ( $(this).data('rating') >= 0) {
 			$(this).addClass('isHidden');
 		}
 	});
+}
+
+$('#untracked').click( function() {
+	$("#breadcrumbs").html("Untracked");
+	showUntracked();
 });
 
 function showUnwatched() {
@@ -144,11 +159,4 @@ $(document).on("click", ".rating", function() {
 	let newStarsDiv = templateBuilder.makeStarsDiv(starId, movieId);
 	$(`#${movieId}`).find('.card-block').append(newStarsDiv);
 });
-	// $(this).children().forEach( (child) => {
-	// 	child.removeClass('ratedStar');
-	// });
-	// for(let i=1; i <= starId; i++)
-	// {
-	// 	$(`#${i}`).addClass('ratedStar');
-	// }
-	// console.log("movieId", movieId);
+

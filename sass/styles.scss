@@ -101,6 +101,7 @@ body {
 
 .navbar-default .navbar-brand {
 	color: white;
+	margin-top: 20px;
 }
 
 .isHidden {
@@ -115,3 +116,68 @@ body {
 	width:20rem;
 	height: 500px;
 }
+
+#login {
+    position: fixed;
+    top: 50vh;
+    left: 50vh;
+    width: 30vh;
+    height: 10vh;
+    z-index: 1;
+    background-color: white;
+    box-shadow: 10px 10px 5px #888888;
+}
+
+.login-page {
+	width: 100%;
+    height: 100vh;
+    border: 1px solid black;
+    #poster-div {
+    	width: 100vh;
+    	height: 100vh;
+    	img {
+    		width: 100vh;
+    		height: 100vh;
+    	}
+    }
+}
+
+#logout {
+	border-radius: 10px;
+    margin-bottom: 10px;
+    margin-top: -10px;
+}
+
+#breadcrumbHolder {
+	margin-bottom: 10px;
+    margin-left: 40px;
+    margin-right: 40px;
+    font-size: 2em;
+    box-shadow: 0 0 0 3px #fff, 2px 0px 0 0px #443642, -1px 1px 0 0px #fff, -11px -11px 2px 1px #eee;
+    background-color: #0e0d0d;
+    color: white;
+    padding-left: 5px;
+}
+
+.rating {
+  unicode-bidi: bidi-override;
+  direction: rtl;
+}
+.rating > span {
+  display: inline-block;
+  position: relative;
+  width: 1.1em;
+}
+.rating > span:hover:before,
+.rating > span:hover ~ span:before {
+	color: yellow;
+   content: "\2605";
+   position: absolute;
+}
+
+.ratedStar {
+	content: "\2605";
+	color: yellow;
+	position: absolute;
+}
+

@@ -133,7 +133,7 @@ function buildMovieDetailsAndCastPromises (movieArray) {
 		detailsWithCastPromiseArr.push(newSearch.getMovieDetailsWithCast(item));
 		//result of getCastDetails goes into detailsWithCastPromiseArr array -- detailsWithCastPromiseArr is now an array of promises
 	});
-	console.log("movieIdArray", movieIdArray);
+	console.log("detailsWithCastPromiseArr", detailsWithCastPromiseArr);
 	return detailsWithCastPromiseArr;
 }
 
@@ -146,8 +146,23 @@ movieController.printUserMoviesToDom = function() {
 				userMovieArr.push(userMovies[movie]);
 			}
 			console.log('userMovieArr', userMovieArr);
-			let promiseArr = buildMovieDetailsAndCastPromises (userMovieArr);
+			let promiseArr = buildMovieDetailsAndCastPromises(userMovieArr);
 			console.log('promiseArr', promiseArr);
+
+			Promise.all(promiseArr)
+			.then( (movieArr) => {
+				// console.log(movieArr);
+				userMovieArr.forEach( (movie, index) => {
+					movie.title = movieArr[index].title;
+					console.log('userMovieArr[movie]', userMovieArr[movie]);
+				});
+
+				// dataFromMovieSearchApi.results.forEach((movie, index) => {
+				// 	dataFromMovieSearchApi.results[index].actors = actorsArrays[index];
+				// });
+				// // console.log('modified search results', dataFromMovieSearchApi);
+				// resolve(dataFromMovieSearchApi);
+			});
 		});
 };
 

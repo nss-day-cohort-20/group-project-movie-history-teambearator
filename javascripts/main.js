@@ -150,13 +150,17 @@ $(document).on("click", ".rating", function() {
 	console.log(event.target.id, "event.target.id");
 	let starId = event.target.id;
 	let movieId = $(this).parent().parent().attr('id');
-	$(this).parent().parent().data('rating', starId);
+	// $(this).parent().parent().data('rating', starId);
+	$(this).parent().parent().attr('data-rating', starId);
+
 	$(this).remove();
 	movieFactory.getUniqueIds(movieId)
 	.then( function(uniqueId) {
 		movieFactory.giveMovieRating(starId, uniqueId);
 	});
-	let newStarsDiv = templateBuilder.makeStarsDiv(starId, movieId);
+	// let newRating = $(this).parent().parent().data('rating');
+	let newStarsDiv = templateBuilder.makeStarsDiv(starId);
 	$(`#${movieId}`).find('.card-block').append(newStarsDiv);
+
 });
 

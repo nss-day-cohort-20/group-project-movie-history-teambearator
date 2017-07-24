@@ -111,10 +111,12 @@ function userMoviesSearched(allUserMovies, string) {
 	});
 }
 
+//helper for printUserMoviesToDom
 function buildMovieDetailsAndCastPromises (movieArray) {
 	let movieIdArray = movieArray.map(function (item) {
 		return item.id;
 	});
+	// make array of promises for each movieID from newSearch.getMovieDetailsWithCast
 	let detailsWithCastPromiseArr = [];
 	movieIdArray.forEach( (item) => {
 		detailsWithCastPromiseArr.push(newSearch.getMovieDetailsWithCast(item));
@@ -123,6 +125,7 @@ function buildMovieDetailsAndCastPromises (movieArray) {
 	return detailsWithCastPromiseArr;
 }
 
+//runs on login to show all user movies
 movieController.printUserMoviesToDom = function() {
 		movieFactory.getUserMovies()
 		.then( (userMovies) => {

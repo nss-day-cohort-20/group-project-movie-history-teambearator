@@ -101,6 +101,7 @@ body {
 
 .navbar-default .navbar-brand {
 	color: white;
+	margin-top: 20px;
 }
 
 .isHidden {
@@ -143,6 +144,8 @@ body {
 
 #logout {
 	border-radius: 10px;
+    margin-bottom: 10px;
+    margin-top: -10px;
 }
 
 #breadcrumbHolder {

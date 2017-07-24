@@ -59,6 +59,8 @@ $(document).on('click', '.delete' ,function() {
 	});
 });
 
+
+
 $('#untracked').click( function() {
 	$("#breadcrumbs").html("Untracked");
 	$('.card').each( function() {
@@ -68,6 +70,8 @@ $('#untracked').click( function() {
 		}
 	});
 });
+
+
 
 $('#unwatched').click( function() {
 	$("#breadcrumbs").html("Unwatched");

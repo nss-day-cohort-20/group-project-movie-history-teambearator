@@ -8,11 +8,10 @@ let movieController = require('./movie-controller');
 let logInGoogle = () => {
 	return firebase.auth().signInWithPopup(provider);
 	//argument of auth provider you're using
-};//results of calling method on firebase object
+};
 
 let logOutGoogle = ()=>{
 	console.log ("logout");
-
 	firebase.auth().signOut().then(function() {
  		alert("Thanks for visiting us!");
  	location.reload();
@@ -20,6 +19,11 @@ let logOutGoogle = ()=>{
  		console.log("error:",error );
 	});
 };
+
+//user can log out by clicking logout button and page refreshes
+$("#logout").click(function(){
+	logOutGoogle();
+});
 
 $(document).on('click','#login', function() {
 	// console.log("login");
@@ -29,13 +33,9 @@ $(document).on('click','#login', function() {
 		let user = result.user.uid;
 		console.log("user", user);
 		movieController.printUserMoviesToDom();
- 		// movieController.loadMoviesToDom();
+		//change classes to show page elements post-login
  		$('.after-login-page').toggleClass('isHidden');
  		$('.login-page').toggleClass('isHidden');
  		$('#userMessageInput').focus();
 	});
-});
-//user can log out by clicking logout button and page refreshes
-$("#logout").click(function(){
-	logOutGoogle();
 });

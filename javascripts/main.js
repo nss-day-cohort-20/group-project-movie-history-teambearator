@@ -84,6 +84,10 @@ $('#watched').click( function() {
 	$('.card').each( function() {
 		$(this).addClass('isHidden');
 		if ( $(this).data('rating') > 0 ) {
+			let rate = $(this).data('rating');
+			for(let i=1; i<=rate; i++) {
+				$(this).find(`#${i}`).addClass('ratedStar');
+			}
 			$(this).removeClass('isHidden');
 		}
 	});
@@ -94,8 +98,26 @@ $('#favorites').click( function() {
 	$('.card').each( function() {
 		$(this).addClass('isHidden');
 		if ( $(this).data('rating') > 8 ) {
+			let rate = $(this).data('rating');
+			for(let i=1; i<=rate; i++) {
+				$(this).find(`#${i}`).addClass('ratedStar');
+			}
 			$(this).removeClass('isHidden');
 		}
 	});
 });
 
+$(document).on("click", ".rating", function() {
+	console.log(event.target.id, "event.target.id");
+	let starId = event.target.id;
+	for(let i=1; i <= starId; i++)
+	{
+		$(`#${i}`).addClass('ratedStar');
+	}
+	let movieId = $(this).parent().parent().attr('id');
+	console.log("movieId", movieId);
+	movieFactory.getUniqueIds(movieId)
+	.then( function(uniqueId) {
+		movieFactory.giveMovieRating(starId, uniqueId);
+	});
+});

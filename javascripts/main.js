@@ -22,8 +22,13 @@ $('#userMessageInput').keyup( function (event) {
 		.then(function(usersMovies) {
 			let arrayifiedUsersMovies = Object.values(usersMovies);
 			movieController.addUserInfoAndPrint(arrayifiedUsersMovies, moviesSearchedFromAPI);
+			if($('#message-creator').children().data('rating'))
+			{
+			console.log($(this));
+			}
 		});
 	}
+	
 });
 
 function buildObj(movieMatch)
@@ -37,6 +42,7 @@ function buildObj(movieMatch)
 //add watchlist button adds
 $(document).on("click", '.watchlist', function() {
 	let movieId = $(this).parent().parent().attr('id');
+	$(this).parent().parent().attr('data-rating', 0);
 	let movieMatch = movieController.selectedMovies;
 	for(var i = 0; i < movieMatch.length; i++) {
 		if(movieMatch[i].id == movieId) {
@@ -129,6 +135,7 @@ $(document).on("click", ".rating", function() {
 		$(`#${i}`).addClass('ratedStar');
 	}
 	let movieId = $(this).parent().parent().attr('id');
+	$(this).parent().parent().attr('data-rating', starId);
 	console.log("movieId", movieId);
 	movieFactory.getUniqueIds(movieId)
 	.then( function(uniqueId) {

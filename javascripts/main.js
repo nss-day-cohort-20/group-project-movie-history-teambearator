@@ -6,7 +6,7 @@ let movieFactory = require('./fbMovieFactory.js');
 let templateBuilder = require('./template-builder.js');
 let user = require('./user-factory.js');
 
-//whether the user hits enter or clicks "submit" they run the search function
+//search is run on input enter keypress
 $('#userMessageInput').keyup( function (event) {
 	$("#breadcrumbs").html("");
 	if (event.which == '13' && $('#userMessageInput').val() !== "") {
@@ -123,8 +123,7 @@ $('#favorites').click( function() {
 $(document).on("click", ".rating", function() {
 	console.log(event.target.id, "event.target.id");
 	let starId = event.target.id;
-	for(let i=1; i <= starId; i++)
-	{
+	for(let i=1; i <= starId; i++) {
 		$(`#${i}`).addClass('ratedStar');
 	}
 	let movieId = $(this).parent().parent().attr('id');
